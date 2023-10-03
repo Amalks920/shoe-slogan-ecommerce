@@ -1,0 +1,81 @@
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title"> Add Categories </h2>
+            
+        </div>
+        <div>
+            <input type="text" placeholder="Search Categories" class="form-control bg-white">
+        </div>
+    </div>
+    
+
+    
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form id="cat-form" action="/admin/category/add-category" method="post" enctype="multipart/form-data">
+                        <p style="color: red;" id="err"><%=req.query.err %></p>
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Category Name</label>
+                            <input  type="text" id="category" minlength="3" max="30" name="productCategory"  placeholder="Type here" class="form-control input" id="category-name" />
+                        </div>
+
+
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label ">Image</label>
+
+                            <input type="file"  name="images" placeholder="Type here" class="form-control input" id="product_name" multiple/>
+                        </div>
+
+
+                        <div class="mb-4">
+                            <label class="form-label">Description</label>
+                            <textarea  id="description" type="text" placeholder="Type here"  name="categoryDescription" class="form-control input"></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Edit category</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                   
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>images</th>
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                                <% data.forEach(el=>{ %>
+                                <tr>
+                                    <td class="text-center">
+                                       1
+                                    </td>
+                                    <td><%=el.productCategory -%></td>
+                                    <td><%=el.categoryDescription -%></td>
+                                    <td><img src="/images/uploads/<%=el.images[0]-%>" width="30" style="position: absolute;" alt=""></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+   
+</section> 
+
+
+
+
+<script src="/javascript/categoryValidation.js"></script>

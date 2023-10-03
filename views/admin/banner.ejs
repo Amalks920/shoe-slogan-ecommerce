@@ -1,0 +1,98 @@
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title"> Add Banners </h2>
+            
+        </div>
+        <div>
+            <input type="text" placeholder="Search Categories" class="form-control bg-white">
+        </div>
+    </div>
+    
+
+    
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form id="bannerForm" action="/admin/add-banner" method="post" enctype="multipart/form-data">
+                        <p style="color: red;" id="err"></p>
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Banner Name</label>
+                            <input   type="text" id="bannername" name="bannername"  placeholder="Type here" class="form-control input" id="category-name" />
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                              <h4>Product Offers</h4>
+                            </div>
+                            <div class="card-body">
+                  
+                              <div class="row gx-2">
+                                <div class="col-sm-6 mb-3">
+                                  <label class="form-label">Product Offer</label>
+                                  <select name="offer" id="prod-offer" class="form-select">
+                                  <option id="default-cat" value="1" disabled selected>Choose Category Offer</option>
+                                  <% productOffers.forEach((offer,index)=>{ %>
+                                    <option value="<%=offer._id %>"><%=offer.offertitle %></option>
+                                 <% }) %>
+                                  
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        <div class="mb-4">
+                            <label for="bannername" class="form-label ">Image</label>
+
+                            <input type="file"  name="images" placeholder="Type here" class="form-control input" id="product_name" multiple/>
+                        </div>
+
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Add Banner</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                   
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>image</th>
+                                   
+                                </tr>
+                            </thead>
+                           
+                            <tbody>
+                                <% banner?.forEach((banner,index)=>{ %>
+
+                                    
+                                <tr>
+                                    <a href="#">
+                                    <td><%=index+1 %></td>
+                                    <td class="" >
+                                    <%=banner?.bannername %>
+                                    </td>
+                                    <td><img src="/images/uploads/<%=banner.images %>" alt="" width="50"></td>
+                                    <td><a href="/admin/edit-banner/<%=banner._id %>">Edit</a></td>
+                                </a>
+                                </tr>
+                                <% }) %>
+                            
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+   
+</section>
+
+<script src="/javascript/banner.js"></script>

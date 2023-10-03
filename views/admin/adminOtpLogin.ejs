@@ -1,0 +1,64 @@
+<main>
+
+	<section class="content-main mt-80 mb-80 mt-80" >
+		<div class="card mx-auto card-login" style="margin-top: 100px;">
+			<div class="card-body" style="background-color: rgb(196, 193, 193);">
+				<h4 class="card-title mb-4">Enter E-Mail ID</h4>
+				<form id="loginform" action="/admin/admin-otp-login" method="post">
+					 <p id="emailError" style="color: red;"><%=req.query.err -%></p> 
+					<div class="mb-3">
+						<input id="typeEmailX" class="form-control" id="typeEmailX" name="email" placeholder="Username or email" type="text">
+					</div> 
+					<p id="emailError" style="color: red;"></p>
+
+					<div class="mb-4">
+						<button type="submit" class="btn btn-primary w-100"> submit </button>
+					</div> 
+				</form>
+		</div>
+	</section>
+</main>
+
+
+<script>
+  
+
+function validateEmail(email) {
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
+
+
+  function handleSubmit(event) {
+
+    const emailInput = document.getElementById("typeEmailX");
+    const email = emailInput.value;
+    console.log('hioasdij')
+    const emailError = document.getElementById("emailError");
+  
+    console.log(email)
+    if (email === "") {
+   
+      emailError.textContent = "Email cannot be blank.";
+      event.preventDefault();
+      return;
+    }
+    if (validateEmail(email)) {
+  
+      emailError.textContent = ""; 
+
+    } else {
+
+      emailError.textContent = "Invalid email address!";
+      event.preventDefault();
+
+    }
+
+}
+
+  const form = document.getElementById("loginform");
+
+  form.addEventListener("submit", handleSubmit);
+
+</script>

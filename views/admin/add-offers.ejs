@@ -1,0 +1,144 @@
+<section class="content-main">
+    <form
+      id="offerForm"
+      action="/admin/add-offer"
+      method="post"
+      enctype="application/x-www-form-urlencoded">
+      <div class="row">
+        <div class="col-9">
+          <div class="content-header">
+            <h2 class="content-title">Add Offer</h2>
+            <div>
+              <button type="submit" class="btn btn-md rounded font-sm hover-up">
+                Publish
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-lg-6">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Offer Details</h4>
+            </div>
+            <div class="card-body">
+              <div class="mb-4">
+                <label for="product_name" class="form-label">Product title</label>
+                <input
+                  type="text"
+                  name="offertitle"
+                  value=""
+                  min="3"
+                  max="25"
+                  placeholder="Type here"
+                  class="form-control"
+                  id="offerName" />
+              </div>
+              <div class="mb-4">
+                <label class="form-label">Full description</label>
+                <textarea
+                id="description"
+                  value="" 
+                  name="offerdescription"
+                  placeholder="Type here"
+                  class="form-control"
+                  rows="4"></textarea>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="mb-4">
+                    <label  class="form-label">Discount Amount / Precentge</label>
+                    <div class="row gx-2">
+                      <input
+                        placeholder="$"
+                        id="discount"
+                        min="1"
+                        max="100"
+                        name="discountAmount"
+                        type="number"
+                        class="form-control" />
+                    </div>
+                  </div>
+  
+
+                </div>
+                
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="mb-4">
+                    <label  class="form-label">Expiry Date</label>
+                    <div class="row gx-2">
+                      <input
+                        placeholder="$"
+                        id=""
+                        
+                        value=""
+                        name="expirationDate"
+                        type="date"
+                        class="form-control" />
+                    </div>
+                  </div>
+  
+
+                </div>
+                
+              </div>
+            </div>
+          </div>
+   
+        </div>
+        <div class="col-lg-3">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Offer Type</h4>
+            </div>
+            <div class="card-body">
+  
+                <div class="row gx-2">
+                    <div class="col-sm-6 mb-3">
+                      <label class="form-label">Offer Type</label>
+                      <select id="offerType" name="offerType" class="form-select">
+                      <option value="1" disabled >Choose Offer Type</option>
+                      <option value="Category"  >Category</option>
+                      <option value="Product" >Product</option>
+
+                      
+                      </select>
+                    </div>
+                  </div>    
+
+            </div>
+          </div>
+  
+          
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Discount Type</h4>
+            </div>
+            <div class="card-body">
+              <div class="row gx-2">
+                <div class="col-sm-6 mb-3">
+                  <label class="form-label">Discount Type</label>
+                  <select id="discountType" name="discountType" class="form-select">
+                  <option value="1" disabled selected>Choose Category</option>
+                  <option value="Fixed"  >Fixed</option>
+                  <option value="Percentage">Percentage</option>
+                    
+                    </option>
+                   
+                  
+                  </select>
+                </div>
+              </div>
+           
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </form>
+  </section>
+ 
+  
+<script src="/javascript/offerValidations"></script>

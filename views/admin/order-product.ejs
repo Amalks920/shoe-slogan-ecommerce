@@ -1,0 +1,164 @@
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Users</h2>
+
+        </div>
+
+    </div>
+    <div class="card mb-4">
+
+        <div class="card-body">
+            <article class="itemlist" style="border: 1px solid black;">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-1 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0">SL NO</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0">User</h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-1 col-sm-2 col-4 col-price"> <h4>No of Products</h4> </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+                        <h4>Order Status</h4>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>Total Price</h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>Payment Mode</h4>
+                    </div>
+
+
+                </div> 
+            </article> 
+
+        
+
+            <% order.items.forEach((item,index)=>{ %>
+
+            <input type="text" name="" id="orderId" value="<%=req?.params?.orderId %>" hidden>
+            <article class="itemlist">
+                <div class="row align-items-center" style="height: 100px;">
+
+                    <div class="col-lg-1 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0"><%=index+1 %></h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                               
+                                <h4 class="mb-0"><%=item.productId.productname %></h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-1 col-sm-2 col-4 col-price"> <h4><%=item.quantity %></h4> </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+
+                      <p><%=order.orderStatus %></p>
+
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>₹ <%=item.price %></h4></h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>COD</h4>
+                    </div>
+                    
+
+                </div> 
+            </article> 
+            
+            <% }) %>
+
+       
+          
+        </div> 
+    </div> 
+    <div class="pagination-area mt-30 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+                <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                <li class="page-item"><a class="page-link" href="#">02</a></li>
+                <li class="page-item"><a class="page-link" href="#">03</a></li>
+                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                <li class="page-item"><a class="page-link" href="#">16</a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+            </ul>
+        </nav>
+    </div>
+</section>
+
+
+
+
+<script>
+    const editBtns=document.querySelectorAll('#edit-btn');
+    const orderId=document.querySelector('#orderId');
+    const productId=document.querySelectorAll('#productId').value;
+    const selectElements=document.querySelectorAll('#select');
+    let selectedStatus;
+   selectElements.forEach(function (selectElement,index){
+        selectElement.addEventListener('change',function () {
+            selectedStatus=selectElement.value
+        })
+   })
+
+
+  
+    editBtns.forEach(function(btn,index){
+        btn.addEventListener('click',function () {
+        const productId=btn.getAttribute('data-id')
+        const url=window.location.href;
+        const urlArr=url.split('/')
+        const orderId=urlArr[urlArr.length-1];
+        
+            handleEdit(orderId,productId)
+        })
+    })
+
+    function handleEdit(orderId,productId) {
+        fetch(`/admin/edit-order-status/${orderId}?productId=${productId}`,
+            {
+                method:'POST',
+                headers: {
+                 'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                status:selectedStatus
+            }) 
+            }
+            
+                 )
+            .then(response=>{response.json()})
+            .then(data=>{
+                console.log(data)
+                location.reload(true)
+            })
+            .catch(error=>console.log(error))
+           
+    }
+    
+
+</script>

@@ -1,0 +1,196 @@
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Orders</h2>
+
+        </div>
+
+    </div>
+    <div class="card mb-4">
+
+        <div class="card-body">
+            <article class="itemlist" style="border: 1px solid rgb(204, 198, 198);">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-1 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0">SL NO</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0">User</h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+                        <h4>Order Status</h4>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>Total Price</h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>Payment Mode</h4>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4></h4>
+                    </div>
+          
+
+                </div>
+            </article>
+
+            <% orders.forEach((order,index)=>{ %>
+
+       
+            <article class="itemlist">
+              
+                <div class="row align-items-center" style="height: 100px;">
+
+                    <div class="col-lg-1 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0"><%=index+1 %></h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0" style="font-size: smaller;"><%=order.user %></h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+                        <select style="width: 150px; height: 20px;" data-id='<%= JSON.stringify({ orderstatus: order.orderStatus, id: order._id }) %>' id="mySelect" >
+                            <option value="" id="option">pending</option>
+                            <option value="" id="option">Cancelled</option>
+                            <option value="" id="option">Delivered</option>
+                            <option  value="" id="option">placed</option>
+                        </select>
+                    </div>
+                   
+                    <input id="userId" type="text" value="<%=order?.user %>" hidden>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4><%=order.totalAmount %></h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4><%=order?.paymentMode %></h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4><button id="edit-btn" style="background-color: antiquewhite;border: none;width: 140px;padding: 10px;">Edit</button></h4>
+                    </div>
+
+
+                </div> 
+            <a href="/admin/order-products/<%=order._id %>">view products</a>
+            </article>
+        
+            <% }) %>
+          
+
+       
+          
+        </div> 
+    </div> 
+    <div class="pagination-area mt-30 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+
+                <%for(var i=0;i<documentsNo;i++){ %>
+
+               
+                <li class="page-item  <%= req.query.page== i ? 'active' : '' %> "><a class="page-link" href="/admin/view-orders?page=<%=i %>"><%=i+1 %></a></li>
+
+                <% }%>
+
+            </ul>
+        </nav>
+    </div>
+</section> 
+
+
+<script>
+    const selectedOrderStatus=document.querySelectorAll('#mySelect')
+    const select=document.querySelectorAll('#option')
+    const editBtns=document.querySelectorAll('#edit-btn')
+    const userId=document.querySelector('#userId').value
+    const pageBtns=document.querySelectorAll('.page-item')
+    let orderIdAndStatus;
+    let selectedStatus;
+
+
+
+        selectedOrderStatus.forEach(function (selectElement,index) {
+            orderIdAndStatus=JSON.parse(selectElement.getAttribute('data-id'))
+            
+            selectElement.addEventListener('change',function () {
+                 orderIdAndStatus=JSON.parse(selectElement.getAttribute('data-id'))
+                 selectedStatus=selectElement.options[selectElement.selectedIndex].textContent 
+            })
+        })
+
+        editBtns.forEach(function (editBtn,index) {
+            editBtn.addEventListener('click',function () {
+                
+            handleEditOrder(orderIdAndStatus.id,selectedStatus)
+        })
+        })
+
+
+
+     
+        
+           function handleEditOrder(orderId,selectedStatus){
+            console.log(orderId,selectedStatus)
+            const requestData={
+                orderId:orderId,
+                selectedStatus:selectedStatus
+            }
+
+            fetch(`/admin/edit-order-status/${orderId}`,
+            {
+                method:'POST',
+                headers: {
+                 'Content-Type': 'application/json',
+                  // You may need to include other headers like authorization tokens here
+                },
+                body: JSON.stringify({
+                status:selectedStatus,
+                user:userId
+            }) 
+            }
+            
+                 )
+            .then(response=>{response.json()})
+            .then(data=>{
+                console.log(data)
+                location.reload(true)
+            })
+            .catch(error=>console.log(error))
+           }
+
+        pageBtns.forEach(function (pageBtn,index) {
+           
+            pageBtn.addEventListener('click',function () {
+                pageBtn.classList.add('active')
+            })
+        })
+
+
+
+
+</script>

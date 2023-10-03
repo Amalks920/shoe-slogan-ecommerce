@@ -1,0 +1,124 @@
+
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Products</h2>
+
+        </div>
+
+    </div>
+    <div class="card mb-4">
+
+        <div class="card-body">
+            <article class="itemlist" style="border: 1px solid rgb(204, 198, 198);">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-1 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0">SL NO</h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0">Product Name</h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+                        <h4>Product Description</h4>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>Total Price</h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4>Listed/Delisted</h4>
+                    </div>
+                   
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4></h4>
+                    </div>
+          
+
+                </div> 
+            </article> 
+
+           
+
+       <% data?.forEach((product,index)=>{ %>
+
+       
+            <article class="itemlist">
+              
+                <div class="row align-items-center" style="height: 100px;">
+
+                    <div class="col-lg-1 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0"><%=index+1%></h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-8  col-name">
+                        <a class="itemside" href="#">
+
+                            <div class="info">
+                                <h4 class="mb-0" style="font-size: smaller;"><%=product?.productname %></h4>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+                        <p><%=product?.description %></p>
+                    </div>
+                   
+                    <input id="userId" type="text" value="" hidden>
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4><%=product?.price%></h4>
+                    </div>
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <p><%=product?.status %></p>
+                    </div>
+
+
+                    <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
+                        <h4><a href="/admin/edit-product/<%=product?._id %>" id="edit-btn" style="background-color: antiquewhite;border: none;width: 140px;padding: 10px;">Edit</a></h4>
+                    </div>
+
+
+                </div> 
+           
+            </article> 
+        
+        <% }) %>
+          
+
+       
+          
+        </div> 
+    </div> 
+    <div class="pagination-area mt-30 mb-50">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+
+                
+
+               <%for(var i=0;i<noOfBtns;i++){%>
+               
+                <li class="page-item active"><a class="page-link" href="/admin/view-products?page=<%=i %>"><%=i+1 %></a></li>
+                <%}%>
+                
+
+            </ul>
+        </nav>
+    </div>
+</section> 

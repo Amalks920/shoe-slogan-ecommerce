@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<title>Shoe Slogan</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <script type="application/x-javascript">
+	addEventListener("load", function () {
+		setTimeout(hideURLbar, 0);
+	}, false);
+
+	function hideURLbar() {
+		window.scrollTo(0, 1);
+	}
+</script>
+
+<!---->
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="/css/shop.css" type="text/css" media="screen" property="" />
+	<link href="/css/style7.css" rel="stylesheet" type="text/css" media="all" />
+	<link rel="stylesheet" href="/css/flexslider.css" type="text/css" media="screen" />
+	<link href="/css/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" type="text/css" href="/css/checkout.css">
+
+	<link href="/admin-assets/css/main.css" rel="stylesheet" type="text/css" />
+
+	<!-- Owl-carousel-CSS -->
+	<link rel="stylesheet" type="text/css" href="/css/jquery-ui1.css">
+	<link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+	<!-- font-awesome-icons -->
+	<link href="/css/font-awesome.css" rel="stylesheet">
+	<!-- //font-awesome-icons -->
+	<link href="//fonts.googleapis.com/css?family=Montserrat:100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+	    rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+
+<!---->
+
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
+	
+	<!-- Bootsrap latest -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">\ -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+	<!-- font awsome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="/css/homepage/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="/css/homepage/icomoon.css">
+	<!-- Ion Icon Fonts-->
+	<link rel="stylesheet" href="/css/homepage/ionicons.min.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="/css/homepage/bootstrap.min.css">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="/css/homepage/magnific-popup.css">
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="/css/homepage/flexslider.css">
+
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="/css/homepage/owl.carousel.min.css">
+	<link rel="stylesheet" href="/css/homepage/owl.theme.default.min.css">
+	
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="/css/homepage/bootstrap-datepicker.css">
+	<!-- Flaticons  -->
+	<link rel="stylesheet" href="/fonts/homepage/flaticon/font/flaticon.css">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="/css/homepage/style.css">
+
+<style>
+	.colorlib-loader {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url(../images/loader.gif) center no-repeat #fff; }
+</style>
+
+	
+
+	</head>
+	<body>
+		<div id="modalbg" style="border: 2px solid red; position: absolute;width: 100vw;z-index: 5;background-color: black;opacity:0.2 ;display: none;height: 100%; ">
+
+		</div>
+
+		<div id="delete-modal" style="background-color: white;opacity: 1; width: 800px;height: 400px;margin-top: 250px;margin-left: 650px;position: fixed;z-index: 6;display: none;">
+			<h2 style="text-align: center;margin-top: 50px;">Do You Want to Delete Address?</h2>
+			<span style="display: flex;justify-content: center;gap: 15px;margin-top: 100px;">
+				<button id="deletebtn" style="width: 100px;height: 40px;background-color: red;color: white;">Delete</button>
+				<button id="cancelbtn" style="width: 100px;height: 40px;background-color: blue;color: white;">Cancel</button>
+			</span>
+		</div>
+	   
+
+        <div id="page" id="page" >
+            <div class="colorlib-loader"></div>
+
+
+		<nav class="colorlib-nav" role="navigation" style="position: fixed;width: 100%;z-index: 5;background-color: whitesmoke;background-image:url(/images/banner3.jpg) ;background-size: cover;background-repeat: no-repeat;box-shadow: 20px;">
+			
+			<div class="top-menu">
+				<div class="container" style="background-color: black;">
+					<div class="row">
+						<div class="col-sm-7 col-md-9">
+							<div id="colorlib-logo"><a href="" style="color: white;padding: 20px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Shoe Slogan</a></div>
+						</div>
+					
+		         </div>
+					<div class="row">
+						<div class="col-sm-12 text-left menu-1">
+							<ul>
+								<li onmouseover="this.style.color='#0078d4';"><a href="/home" style="color: white;">Home</a></li>
+								<li><a href="/search-page?page=0" style="color: white;">Shop</a></li>
+								<li class="has-dropdown">
+									<a href="men.html">Men</a>
+									<ul class="dropdown">
+										<li><a href="product-detail.html">Product Detail</a></li>
+										<li><a href="cart.html">Shopping Cart</a></li>
+										<li><a href="checkout.html">Checkout</a></li>
+										<li><a href="order-complete.html">Order Complete</a></li>
+										<li><a href="add-to-wishlist.html">Wishlist</a></li>
+									</ul>
+								</li>
+								<li><a href="" style="color: white;">Women</a></li>
+								<li><a href="" style="color: white;">About</a></li>
+								<li><a href="" style="color: white;">Contact</a></li>
+								<li><a href="/user-dashboard?page=0" style="color: white;">User Dashboard</a></li>
+								<% if(!isLoggedIn){ %>
+
+								
+								<li><a href="/loginOrSignup" style="color: white;">Login</a></li>
+								<% }else{ %>
+									<li><a href="/logout" style="color: white;">Logout</a></li>
+								<% } %>
+								<li class="cart"><a  href="/get-cart" style="color: white;"><i class="icon-shopping-cart"></i> Cart </a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="sale">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-8 offset-sm-2 text-center">
+							<div class="row">
+								<div class="owl-carousel2">
+									<div class="item">
+										<div class="col">
+											<h3><a href="#">25% off (Almost) Everything! Use Code: Summer Sale</a></h3>
+										</div>
+									</div>
+									<div class="item">
+										<div class="col">
+											<h3><a href="#">Our biggest sale yet 50% off all summer shoes</a></h3>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</nav>
+
+		<div style="margin-top: 170px;">
+			<%- body %>
+
+		</div>
+        
+
+        <footer id="colorlib-footer" role="contentinfo" style="background-color: black;color: white;">
+			<div class="container">
+				<div class="row row-pb-md" style="color: white;">
+					<div class="col footer-col colorlib-widget">
+						<h4 style="color:white;">About Footwear</h4>
+						<p style="color:white;">Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
+						<p>
+							<ul class="colorlib-social-icons">
+								<li><a href="#"><i class="icon-twitter"></i></a></li>
+								<li><a href="#"><i class="icon-facebook"></i></a></li>
+								<li><a href="#"><i class="icon-linkedin"></i></a></li>
+								<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col footer-col colorlib-widget">
+						<h4 style="color:white;">Customer Care</h4>
+						<p>
+							<ul class="colorlib-footer-links" style="color:white;">
+								<li><a href="#" style="color: white;">Contact</a></li>
+								<li><a href="#" style="color: white;">Returns/Exchange</a></li>
+								<li><a href="#" style="color: white;">Gift Voucher</a></li>
+								<li><a href="#" style="color: white;">Wishlist</a></li>
+								<li><a href="#" style="color: white;">Special</a></li>
+								<li><a href="#" style="color: white;">Customer Services</a></li>
+								<li><a href="#" style="color: white;">Site maps</a></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col footer-col colorlib-widget">
+						<h4 style="color:white;">Information</h4>
+						<p>
+							<ul class="colorlib-footer-links" style="color:white;">
+								<li><a href="#" style="color: white;">About us</a></li>
+								<li><a href="#" style="color: white;">Delivery Information</a></li>
+								<li><a href="#" style="color: white;">Privacy Policy</a></li>
+								<li><a href="#" style="color: white;">Support</a></li>
+								<li><a href="#" style="color: white;">Order Tracking</a></li>
+							</ul>
+						</p>
+					</div>
+
+					<div class="col footer-col">
+						<h4>News</h4>
+						<ul class="colorlib-footer-links" style="color:white;">
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="#">Press</a></li>
+							<li><a href="#">Exhibitions</a></li>
+						</ul>
+					</div>
+
+					<div class="col footer-col" style="color:white;">
+						<h4>Contact Information</h4>
+						<ul class="colorlib-footer-links" style="color:white;">
+							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li><a href="tel://7025769349">+ 1235 2355 98</a></li>
+							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li><a href="#">yoursite.com</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="copy">
+				<div class="row">
+					<div class="col-sm-12 text-center">
+						<p>
+							<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
+							<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	
+        </div>
+
+    <!-- jQuery -->
+	<script src="/js/homepage/jquery.min.js"></script>
+    <!-- popper -->
+    <script src="/js/homepage/popper.min.js"></script>
+    <!-- bootstrap 4.1 -->
+    <script src="/js/homepage/bootstrap.min.js"></script>
+    <!-- jQuery easing -->
+    <script src="/js/homepage/jquery.easing.1.3.js"></script>
+     <!-- Waypoints -->
+     <script src="/js/homepage/jquery.waypoints.min.js"></script>
+     <!-- Flexslider -->
+     <script src="/js/homepage/jquery.flexslider-min.js"></script>
+     <!-- Owl carousel -->
+     <script src="/js/homepage/owl.carousel.min.js"></script>
+     <!-- Magnific Popup -->
+     <script src="/js/homepage/jquery.magnific-popup.min.js"></script>
+     <script src="/js/homepage/magnific-popup-options.js"></script>
+     <!-- Date Picker -->
+     <script src="/js/homepage/bootstrap-datepicker.js"></script>
+     <!-- Stellar Parallax -->
+     <script src="/js/homepage/jquery.stellar.min.js"></script>
+     <!-- Main -->
+     <script src="/js/homepage/main.js"></script>
+
+	 
+	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"></script>
+
+	 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+
+	 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+	 <script src="/js/minicart.js"></script>
+	 <!-- /nav -->
+	<script src="/js/modernizr-2.6.2.min.js"></script>
+	<script src="/js/classie.js"></script>
+	<script src="/js/demo1.js"></script>
+	<!-- //nav -->
+
+
+	<!--search-bar-->
+	<script src="/js/search.js"></script>
+	<!--//search-bar-->
+		<!--Image Zoom-->
+	<script src="/js/imagezoom.js"></script>
+	<!-- script for responsive tabs -->
+	<script src="/js/easy-responsive-tabs.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#horizontalTab').easyResponsiveTabs({
+				type: 'default', //Types: default, vertical, accordion           
+				width: 'auto', //auto or any width like 600px
+				fit: true, // 100% fit in a container
+				closed: 'accordion', // Start closed if in accordion view
+				activate: function (event) { // Callback function if tab is switched
+					var $tab = $(this);
+					var $info = $('#tabInfo');
+					var $name = $('span', $info);
+					$name.text($tab.text());
+					$info.show();
+				}
+			});
+			$('#verticalTab').easyResponsiveTabs({
+				type: 'vertical',
+				width: 'auto',
+				fit: true
+			});
+		});
+	</script>
+
+
+	<!-- price range (top products) -->
+	<script src="/js/jquery-ui.js"></script>
+	
+	<script>
+		//<![CDATA[ 
+		$(window).load(function () {
+			$("#slider-range").slider({
+				range: true,
+				min: 0,
+				max: 9000,
+				values: [50, 6000],
+				slide: function (event, ui) {
+					$("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+				}
+			});
+			$("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+
+		}); //]]>
+	</script>
+	<!-- //price range (top products) -->
+	<!-- FlexSlider -->
+	<script src="/js/jquery.flexslider.js"></script>
+	<script>
+		// Can also be used with $(document).ready()
+		$(window).load(function () {
+			$('.flexslider').flexslider({
+				animation: "slide",
+				controlNav: "thumbnails"
+			});
+		});
+	</script>
+
+		<!-- start-smoth-scrolling -->
+		<script type="text/javascript" src="/js/move-top.js"></script>
+		<script type="text/javascript" src="/js/easing.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function ($) {
+				$(".scroll").click(function (event) {
+					event.preventDefault();
+					$('html,body').animate({
+						scrollTop: $(this.hash).offset().top
+					}, 1000);
+				});
+			});
+		</script>
+		<!-- //end-smoth-scrolling -->
+		<script type="text/javascript" src="/js/bootstrap-3.1.1.min.js"></script>
+	
+
+	 
+     </body>
+ </html>
+ 
+ <script>
+
+ </script>

@@ -1,0 +1,41 @@
+{
+  "name": "e-commerce-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cropperjs": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "easyinvoice": "^3.0.23",
+    "exceljs": "^4.3.0",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "lodash": "^4.17.21",
+    "mailgen": "^2.0.27",
+    "moment": "^2.29.4",
+    "mongoose": "^7.3.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nocache": "^4.0.0",
+    "nodemailer": "^6.9.4",
+    "otp-generator": "^4.0.1",
+    "puppeteer": "^21.3.4",
+    "razorpay": "^2.9.2",
+    "sharp": "^0.32.6",
+    "twilio": "^4.13.0",
+    "two-step-auth": "^1.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

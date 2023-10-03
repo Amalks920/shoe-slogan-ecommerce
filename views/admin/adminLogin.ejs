@@ -1,0 +1,98 @@
+<main>
+
+	<section class="content-main mt-80 mb-80 mt-80" >
+		<div class="card mx-auto card-login" style="margin-top: 100px;">
+			<div class="card-body" style="background-color: rgb(196, 193, 193);">
+				<h4 class="card-title mb-4">Log In</h4>
+				<form id="loginform" action="/admin/admin-login" method="post">
+					<p id="emailError" style="color: red;"><%=req.query.isValid -%></p>
+					<div class="mb-3">
+						<input class="form-control" id="typeEmailX" name="email" placeholder="Username or email" type="text">
+					</div> 
+					<p id="passwordError" style="color: red;"></p>
+					<div class="mb-3">
+						<input id="typePasswordX" class="form-control" name="password" placeholder="Password" type="password">
+					</div>
+					<div class="mb-3">
+						<a href="/admin/forgot-password" class="float-end font-sm">Forgot password?</a>
+							<a href="/admin/admin-otp-login">Login Using OTP</a>
+						</label>
+					</div> 
+					<div class="mb-4">
+						<button type="submit" class="btn btn-primary w-100"> Login </button>
+					</div> 
+				</form>
+		</div>
+	</section>
+</main>
+
+
+
+<script>
+
+
+
+
+function validateEmail(email) {
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
+
+  function validatePassword(password) {
+    const passwordPattern=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+    return passwordPattern.test(password)
+  }
+  
+
+  function handleSubmit(event) {
+
+    const emailInput = document.getElementById("typeEmailX");
+    const email = emailInput.value;
+    console.log('hioasdij')
+
+    const emailError = document.getElementById("emailError");
+
+    console.log(email)
+    if (email === "") {
+      emailError.textContent = "Email cannot be blank.";
+      event.preventDefault();
+      return; 
+    }
+    if (validateEmail(email)) {
+
+      emailError.textContent = ""; 
+   
+    } else {
+
+      emailError.textContent = "Invalid email address!";
+      event.preventDefault();
+
+    }
+  
+  
+    const passwordInput = document.getElementById("typePasswordX");
+    const password = passwordInput.value;
+   
+    const passwordError = document.getElementById("passwordError");
+
+    if (password === "") {
+      passwordError.textContent = "Password cannot be blank";
+      event.preventDefault();
+      return;
+    }
+    if (validatePassword(password)) {
+      passwordError.textContent = "";
+
+    } else {
+
+      passwordError.textContent = "Invalid password!";
+      event.preventDefault();
+    }
+  }
+  
+
+  const form = document.getElementById("loginform");
+  form.addEventListener("submit", handleSubmit);
+</script>
