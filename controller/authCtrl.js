@@ -212,10 +212,19 @@ const getHomePage = expressAsycnHandler(async (req, res, next) => {
 
 const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
   if(req.session.user){
-    res.redirect('/home')
+    return res.redirect('/home')
   }
+
+  const PAGE_LIMIT=9;
+  const pageNo=req.query.page;
+  const ITEMS_TO_BE_SKIPPED=PAGE_LIMIT*pageNo
+  let   NO_OF_ITEMS_PER_PAGE
+
   try {
     const products = await productModal.find({ status: { $ne: "Delisted" } });
+
+     NO_OF_ITEMS_PER_PAGE=Math.floor(products.length)/PAGE_LIMIT;
+
     const category = await categoryModal.find({});
     const banner=await bannerModal.find({}).populate('offer');
     const productCountByCategory = await productModal.aggregate([
@@ -233,7 +242,8 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
       products: products,
       category,
       productCountByCategory,
-      banner:banner
+      banner:banner,
+      NO_OF_ITEMS_PER_PAGE
     });
   } catch (error) {
     console.log(error.message);
