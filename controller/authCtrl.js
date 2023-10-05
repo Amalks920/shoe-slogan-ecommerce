@@ -243,7 +243,7 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
       category,
       productCountByCategory,
       banner:banner,
-      NO_OF_ITEMS_PER_PAGE
+      NO_OF_ITEMS_PER_PAGE:NO_OF_ITEMS_PER_PAGE
     });
   } catch (error) {
     console.log(error.message);
@@ -415,14 +415,10 @@ const adminChangePasswordPost=async (req,res,next)=>{
   const {oldPassword,newPassword,email}=req.body
    try {
      const findUser=await User.findOne({email:email})
-    //  console.log(await findUser.isPasswordMatched(oldPassword))
-    //  if((await findUser.isPasswordMatched(oldPassword))){
        findUser.password=newPassword;
        findUser.save()
        res.redirect('/admin/admin-login')
-    //  }else{
-    //    console.log('failed')
-    //  }
+  
    } catch (error) {
     res.redirect('/404')
    }
