@@ -218,7 +218,7 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
   const PAGE_LIMIT=9;
   const pageNo=req.query.page;
   const ITEMS_TO_BE_SKIPPED=PAGE_LIMIT*pageNo
-  let   NO_OF_ITEMS_PER_PAGE
+  let   NO_OF_ITEMS_PER_PAGE=9
 
   try {
     const products = await productModal.find({ status: { $ne: "Delisted" } });
