@@ -223,7 +223,7 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
   try {
     const products = await productModal.find({ status: { $ne: "Delisted" } });
 
-     NO_OF_ITEMS_PER_PAGE=Math.floor(products.length)/PAGE_LIMIT;
+     NO_OF_ITEMS_PER_PAGE=Math.ceil(products.length/PAGE_LIMIT);
 
     const category = await categoryModal.find({});
     const banner=await bannerModal.find({}).populate('offer');

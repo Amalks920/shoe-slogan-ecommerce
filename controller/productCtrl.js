@@ -72,7 +72,7 @@ const getAddProduct=expressAsyncHandler(async(req,res,next)=>{
   
     try {
       await Product.create(product);
-      res.redirect('/admin/product/view-products');
+      res.redirect('/admin/view-products');
     } catch (error) {
       res.redirect('/404')
     }
