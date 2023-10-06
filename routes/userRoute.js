@@ -121,7 +121,6 @@ router.get("/shop", setCacheControl, authorizationMiddleware, getShopPage);
 router.get(
   "/product-page/:id",
   setCacheControl,
-  authorizationMiddleware,
   getProductPage
 );
 
