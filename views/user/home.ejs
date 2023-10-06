@@ -137,10 +137,12 @@
 					<%	}) %>
 			
 				</div>
+				<%if(NO_OF_ITEMS_PER_PAGE){ %>
 
+				
 				<ul class="pagination justify-content-start">
 
-						
+					
 					<% for(var i=0;i<NO_OF_ITEMS_PER_PAGE;i++){ %>
 						
 					
@@ -149,7 +151,7 @@
 						<% } %>
 
 			</ul>
-
+		<% } %>
 				
 				<div class="row">
 					<div class="col-md-12 text-center">

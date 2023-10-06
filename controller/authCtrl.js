@@ -116,30 +116,26 @@ const userLogin = expressAsycnHandler(async (req, res, next) => {
 
 const adminLogin = expressAsycnHandler(async (req, res, next) => {
   const { email, password } = req.body;
-  //check if user exist or not
+
   try {
     let findUser = await User.findOne({ email: email });
 
     if (findUser?.isBlocked === true) {
       res.status(401).json({ msg: "user is blocked" });
     }
-
-    //validate the password
     if (
       findUser &&
       (await findUser.isPasswordMatched(password)) &&
       findUser.role === "admin"
     ) {
-      //making user in session true
+  
       req.session.admin = true;
 
-      //destructuring finduser to get details of user
       const { _id, email, isBlocked, name, role } = findUser;
 
-      //send response to client side
       res.redirect("/admin/admin-home");
     } else {
-      //if user doesn't exist send error
+ 
       res.redirect(
         url.format({
           pathname: "/admin/admin-login",
@@ -219,7 +215,7 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
   const PAGE_LIMIT=9;
   const pageNo=req.query.page;
   const ITEMS_TO_BE_SKIPPED=PAGE_LIMIT*pageNo
-  let   NO_OF_ITEMS_PER_PAGE=9
+  let NO_OF_ITEMS_PER_PAGE=9
 
   try {
     const products = await productModal.find({ status: { $ne: "Delisted" } });
@@ -236,8 +232,6 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
         },
       },
     ]);
-    console.log(NO_OF_ITEMS_PER_PAGE)
-    console.log(NO_OF_ITEMS_PER_PAGE)
     res.render("user/home", {
       layout: "./layout/homeLayout.ejs",
       isLoggedIn: false,
