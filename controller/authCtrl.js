@@ -248,7 +248,7 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
       NO_OF_ITEMS_PER_PAGE:NO_OF_ITEMS_PER_PAGE
     });
   } catch (error) {
-    console.log(error.message);
+    res.redirect('/404')
   }
 });
 
