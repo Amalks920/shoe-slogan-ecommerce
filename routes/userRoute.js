@@ -68,7 +68,7 @@ const {
 } = require("../controller/paymentCtrl");
 const { showOfferProducts } = require("../controller/offerCtrl");
 
-router.get("/front-page", setCacheControl, getHomePageNotLoggedIn);
+router.get("/", setCacheControl, getHomePageNotLoggedIn);
 
 router.post("/user-signup", setCacheControl, createUser);
 router.get("/loginOrSignup", setCacheControl, getUserLogin);
