@@ -79,7 +79,7 @@ const searchPage=async(req,res,next)=>{
 
         if(search){
          products=products.filter((product,index)=>{
-            return product.productname.startsWith(search)
+            return product.productname.search(search)!=-1
           })
           NO_OF_PAGES=products.length
         }

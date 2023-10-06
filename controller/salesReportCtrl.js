@@ -14,7 +14,7 @@ const getSalesReport=async(req,res,next)=>{
 }
 
 
-const salesReport=async (req, res, next) => {0
+const salesReport=async (req, res, next) => {
 
     try {
 
@@ -47,7 +47,7 @@ const salesReport=async (req, res, next) => {0
    
     to += 'T23:59:59.999Z'
     const NO_OF_ORDERS = (await orderModal.find({ createdAt: { $gte: from, $lte: to }, orderStatus: 'Delivered' })).length
-    NO_OF_BUTTONS=Math.floor(NO_OF_ORDERS/ITEMS_PER_PAGE)
+    NO_OF_BUTTONS=Math.ceil(NO_OF_ORDERS/ITEMS_PER_PAGE)
 
     const orders = await orderModal.find({ createdAt: { $gte: from, $lte: to }, orderStatus: 'Delivered' }).populate(
    
