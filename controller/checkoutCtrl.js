@@ -24,7 +24,7 @@ const checkout = async (req, res, next) => {
     const selectedAddress = address?.address?.filter((address) => {
       return address?.isSelected === true;
     });
-
+    if(!cart) return res.redirect('/home')
     res.render("user/checkout.ejs", {
       layout: "./layout/homeLayout.ejs",
       isLoggedIn: true,

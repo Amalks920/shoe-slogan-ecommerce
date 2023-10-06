@@ -22,6 +22,8 @@ const {
   changePassword,
   changePasswordPost,
   get404Err,
+  verifyOtpPostFg,
+  getVerifyOtpFg,
 } = require("../controller/authCtrl");
 
 const {
@@ -79,6 +81,8 @@ router.get("/forgot-password", setCacheControl, getForgotPassword);
 router.post("/forgot-password", setCacheControl, forgotPasswordPost);
 router.get("/change-password", setCacheControl, changePassword);
 router.post("/change-password", setCacheControl, changePasswordPost);
+router.get('/verify-otp-fg',setCacheControl,getVerifyOtpFg);
+router.post('/verify-otp-fg',setCacheControl,verifyOtpPostFg);
 
 router.get(
   "/user-dashboard",

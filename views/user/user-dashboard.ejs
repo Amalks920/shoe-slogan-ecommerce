@@ -46,12 +46,19 @@
                             
                         </tr>
 
-                     
+                        <tr>
+                            <td style="font-weight: 500;">Name</td>
+                            <td style="font-weight: 500;"><%=wallet?.user_id?.username%></td>
+                        </tr>
+                        <tr>
 
                         <tr>
                             <td style="font-weight: 500;">Wallet Balance</td>
                             <td class="wallet-amount">₹<%=wallet?.amount.toFixed()%></td>
                         </tr>
+
+
+
                     </tbody>
                 </table>
             </div>

@@ -10,6 +10,7 @@ const userSchema = require("../model/userSchema");
 const walletModal = require("../model/walletModal");
 const bannerModal=require('../model/bannerModal');
 const { findProducts } = require("../helper/userHelper");
+const { sendOtp } = require("../helper/authHelper");
 
 
 
@@ -235,12 +236,13 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
         },
       },
     ]);
-
+    console.log(NO_OF_ITEMS_PER_PAGE)
+    console.log(NO_OF_ITEMS_PER_PAGE)
     res.render("user/home", {
       layout: "./layout/homeLayout.ejs",
       isLoggedIn: false,
       products: products,
-      category,
+      category,   
       productCountByCategory,
       banner:banner,
       NO_OF_ITEMS_PER_PAGE:NO_OF_ITEMS_PER_PAGE
@@ -249,6 +251,7 @@ const getHomePageNotLoggedIn = expressAsycnHandler(async (req, res, next) => {
     console.log(error.message);
   }
 });
+
 
 
 const getAdminHome = expressAsycnHandler(async (req, res, next) => {
@@ -427,32 +430,153 @@ const adminChangePasswordPost=async (req,res,next)=>{
 const forgotPasswordPost=async(req,res,next)=>{
   try {
     const {email}=req.body
+    let userEmail=req.body.email
     const user=await userSchema.findOne({email:email})
     if(user && user.role==='user'){
+      req.session.email=email
+      const EMAIL = process.env.MAILGEN_EMAIL;
+      const PASSWORD = process.env.MAILGEN_PASSWORD;
 
-      res.redirect(
-        url.format({
-          pathname: "/change-password",
-          query: {
-            email: `${email}`,
-          },
+      let config = {
+        service: "gmail",
+        auth: {
+          user: EMAIL,
+          pass: PASSWORD,
+        },
+      };
+
+      let transporter = nodemailer.createTransport(config);
+
+      let MailGenerator = new MailGen({
+        theme: "default",
+        product: {
+          name: "Mailgen",
+          link: "https://mailgen.js/",
+        },
+      });
+
+      let otp = otpGenerator.generate(6, {
+        upperCaseAlphabets: false,
+        specialChars: false,
+        lowerCaseAlphabets: false,
+        digits: true,
+      });
+      let response = {
+        body: {
+          Email: userEmail,
+          intro: `Your OTP ${otp})}`,
+
+          outro: "Expires within 10 minuites",
+        },
+      };
+
+      let mail = MailGenerator.generate(response);
+
+      let message = {
+        from: EMAIL,
+        to: userEmail,
+        subject: "Your OTP",
+        html: mail,
+      };
+
+      transporter
+        .sendMail(message)
+        .then(async () => {
+          req.session.otp = otp;
+          req.session.email=user.email
+          req.session.isUserOtpSend=true
+
+          res.redirect("/verify-otp-fg");
         })
-      );
-      
-    }else{
+        .catch((error) => {
+          console.log(error.message);
+          return res.json({ error });
+        });
+    } else {
       res.redirect(
         url.format({
           pathname: "/forgot-password",
           query: {
-            err: `invalid email`,
+            err: "invalid email address",
           },
         })
       );
     }
   } catch (error) {
+    console.log(error)
     res.redirect('/404')
   }
+
+  //     res.redirect(
+  //       url.format({
+  //         pathname: "/verify-otp",
+  //         query: {
+  //           email: `${email}`,
+  //         },
+  //       })
+  //     );
+      
+  //   }else{
+  //     res.redirect(
+  //       url.format({
+  //         pathname: "/forgot-password",
+  //         query: {
+  //           err: `invalid email`,
+  //         },
+  //       })
+  //     );
+  //   }
+  // } catch (error) {
+  //   console.log(error.message)
+  //   res.redirect('/404')
+  // }
 }
+
+
+
+
+const verifyOtpPostFg = async (req, res, next) => {
+  try {
+
+    if (req.body.otp === req.session.otp) {
+     console.log(req.body.otp)
+      res.redirect("/change-password");
+    } else {
+
+     return  res.render('user/verifyOtpFg',{layout:'./layout/signupLogin.ejs',req:req})
+      res.redirect(
+        url.format({
+          pathname: "/verify-otp",
+          query: {
+            err: "invalid OTP",
+          },
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error.message)
+    res.redirect('/404')
+  }
+};
+
+const getVerifyOtpFg = async (req, res, next) => {
+  
+
+
+  if(!req.session.isUserOtpSend){
+    return res.redirect('/loginOrSignup')
+  }
+  if (req.session.user) {
+    return res.redirect("/home");
+  }
+
+  try {
+
+    res.render("user/verifyOtpFg.ejs", { layout: "./layout/signupLogin", req: req });
+  } catch (error) {
+    res.redirect('/404')
+  }
+};
 
 const changePassword=async (req,res,next)=>{
   if(req?.session?.user){
@@ -467,16 +591,19 @@ const changePassword=async (req,res,next)=>{
 } 
 
 const changePasswordPost=async (req,res,next)=>{
- const {oldPassword,newPassword,email}=req.body
+ const {oldPassword,newPassword}=req.body
+ const email=req.session.email
   try {
      const findUser=await User.findOne({email:email})
-     
-    
+     console.log('email')
+     console.log(email)
+     console.log('email')
       findUser.password=newPassword;
       findUser.save()
       res.redirect('/loginOrSignup')
  
   } catch (error) {
+    console.log(error.message)
     res.redirect('/404')
   }
 }
@@ -676,8 +803,8 @@ module.exports = {
   getHomePageNotLoggedIn,
   getAdminHome,
   verifyOtpAdminPost,
-  logout,
-  adminLogout,
+  logout,verifyOtpPostFg,
+  adminLogout,getVerifyOtpFg,
   getOtpLogin,
   otpLoginPost,
   getVerifyOtp,

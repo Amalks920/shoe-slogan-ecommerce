@@ -8,7 +8,7 @@
 
 				<% banner.forEach((el,index)=>{ %>
 
-				
+					<%  console.log(NO_OF_ITEMS_PER_PAGE) %>
 			   	<li style="background-image: url(images/uploads/<%=el.images%>);">
 			   		<div class="overlay"></div>
 			   		<div class="container-fluid">
@@ -29,7 +29,7 @@
 			   	</li>
 				   <% }) %>
 				
-			   	<li style="background-image: url(images/homepage/img_bg_2.jpg);">
+			   	<!-- <li style="background-image: url(images/homepage/img_bg_2.jpg);">
 			   		<div class="overlay"></div>
 			   		<div class="container-fluid">
 			   			<div class="row">
@@ -46,7 +46,7 @@
 				   			</div>
 				   		</div>
 			   		</div>
-			   	</li>
+			   	</li> -->
 			   	<li style="background-image: url(images/homepage/img_bg_3.jpg);">
 			   		<div class="overlay"></div>
 			   		<div class="container-fluid">
@@ -84,17 +84,17 @@
 				<div class="row">
 					<div class="col-sm-6 text-center">
 						<div class="featured">
-							<a href="#" class="featured-img" style="background-image: url(images/homepage/men.jpg);"></a>
+							<a href="/search-page?category=men&page=0" class="featured-img" style="background-image: url(images/homepage/men.jpg);"></a>
 							<div class="desc">
-								<h2><a href="#">Shop Men's Collection</a></h2>
+								<h2><a href="/search-page?category=men&page=0">Shop Men's Collection</a></h2>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6 text-center">
 						<div class="featured">
-							<a href="#" class="featured-img" style="background-image: url(images/homepage/women.jpg);"></a>
+							<a href="/search-page?category=women&page=0"" class="featured-img" style="background-image: url(images/homepage/women.jpg);"></a>
 							<div class="desc">
-								<h2><a href="#">Shop Women's Collection</a></h2>
+								<h2><a href="/search-page?category=women&page=0">Shop Women's Collection</a></h2>
 							</div>
 						</div>
 					</div>
