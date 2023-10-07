@@ -22,7 +22,7 @@ const salesReport=async (req, res, next) => {
  let {from,to}=req.query
     
     const ITEMS_PER_PAGE=9
-    const CURRENT_PAGE_NUMBER=req.query.pageno
+    const CURRENT_PAGE_NUMBER=req.query.page
 
     const today = moment().format('YYYY-MM-DD')
    
@@ -49,7 +49,7 @@ const salesReport=async (req, res, next) => {
     const NO_OF_ORDERS = (await orderModal.find({ createdAt: { $gte: from, $lte: to }, orderStatus: 'Delivered' })).length
     NO_OF_BUTTONS=Math.ceil(NO_OF_ORDERS/ITEMS_PER_PAGE)
 
-    const orders = await orderModal.find({ createdAt: { $gte: from, $lte: to }, orderStatus: 'Delivered' }).populate(
+    let orders = await orderModal.find({ createdAt: { $gte: from, $lte: to }, orderStatus: 'Delivered' }).populate(
    
     'user'
    
@@ -57,6 +57,16 @@ const salesReport=async (req, res, next) => {
     .sort({createdAt:-1})
     .skip(ITEMS_PER_PAGE*CURRENT_PAGE_NUMBER)
     .limit(ITEMS_PER_PAGE)
+  
+    console.log(orders)
+    orders = orders.map((order, index) => {
+      return {
+          ...order, // Spread the existing properties to keep them unchanged
+          createdAt: moment(order.createdAt).format('YYYY-MM-DD HH:mm:ss')
+      };
+  });
+  console.log(orders)
+    
 
  from = from.split('T')[0]
  to = to.split('T')[0]

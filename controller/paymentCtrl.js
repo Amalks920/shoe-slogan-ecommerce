@@ -23,9 +23,7 @@ const getPaymentPage=async (req, res) => {
     const userId = req.session.user._id;
     const { razorpayOrderId, razorpayPaymentId, secret } = req.body;
 
-    if(!razorpayOrderId && !razorpayOrderId && !secret){
-        
-    }
+  
     const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_API_SECRET);
     hmac.update(razorpayOrderId + "|" + razorpayPaymentId);
     let generatedSignature = hmac.digest("hex");

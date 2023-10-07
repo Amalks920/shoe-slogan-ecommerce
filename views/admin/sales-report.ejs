@@ -25,12 +25,12 @@
 
                     <div class="col-md-2 col-6">
                         <label for="">From</label>
-                        <input type="date" id="from" name="from" value="<%= from %>" class="form-control">
+                        <input type="date" id="fromDate" name="from" value="<%= from %>" class="form-control">
                     </div>
 
                     <div class="col-md-2 col-6">
                         <label for="">To</label>
-                        <input type="date" name="to" id="to" value="<%= to %>" class="form-control">
+                        <input type="date" name="to" id="toDate" value="<%= to %>" class="form-control">
                     </div>
 
                     <div class="col-md-2 col-6">
@@ -86,19 +86,19 @@
                             <a class="itemside" href="#">
                      
                                 <div class="info">
-                                    <h6 class="mb-0"><%=order?._id %></h6>
+                                    <h6 class="mb-0"><%=order?._doc._id %></h6>
                                 </div>
                             </a>
                         </div> 
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span><%=order?.user?.username %></span> </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span><%=order?._doc?.user?.username %></span> </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-status">
                             <span class=""><%=order?.createdAt %></span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span><%=order?.totalAmount %></span>
+                            <span><%=order?._doc.totalAmount %></span>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-4 col-date">
-                            <span><%=order?.paymentMode %></span>
+                            <span><%=order?._doc.paymentMode %></span>
                         </div><div class="col-lg-1 col-sm-2 col-4 col-date">
                             <span><a href="/admin/order-products/<%=order._id%>">View Details</a></span>
                         </div>
@@ -143,14 +143,11 @@
 
 
 <script>
-    const fromInput=document.querySelector('#from')
 
-    fromInput.addEventListener('input',function (event) {
-            const fromDate=fromInput.value
-            const today= Date.now();
-            console.log(fromDate,today)
-            console.log(today<fromDate)
-    })
- 
+  const currentDate = new Date().toISOString().split('T')[0]; // Get the current date in YYYY-MM-DD format
+  document.getElementById('fromDate').setAttribute('max', currentDate);
+  document.getElementById('toDate').setAttribute('max', currentDate);
+
+
     
 </script>

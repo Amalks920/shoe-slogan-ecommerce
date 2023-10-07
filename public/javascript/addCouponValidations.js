@@ -98,7 +98,7 @@ submitForm.addEventListener('submit',function(event){
 
 
 const yesterday=new Date();
-yesterday.setDate(yesterday.getDate()-1);
+yesterday.setDate(yesterday.getDate());
 
 const formatedYesterDay=yesterday.toISOString().slice(0,16);
 document.getElementById('expirationDate').setAttribute('min',formatedYesterDay)
