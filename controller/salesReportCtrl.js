@@ -54,6 +54,7 @@ const salesReport=async (req, res, next) => {
     'user'
    
     )
+    .sort({createdAt:-1})
     .skip(ITEMS_PER_PAGE*CURRENT_PAGE_NUMBER)
     .limit(ITEMS_PER_PAGE)
 

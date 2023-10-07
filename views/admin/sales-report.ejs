@@ -141,3 +141,16 @@
     </footer>
 </main>
 
+
+<script>
+    const fromInput=document.querySelector('#from')
+
+    fromInput.addEventListener('input',function (event) {
+            const fromDate=fromInput.value
+            const today= Date.now();
+            console.log(fromDate,today)
+            console.log(today<fromDate)
+    })
+ 
+    
+</script>

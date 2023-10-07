@@ -605,8 +605,8 @@ const downloadInvoice = async (req, res, next) => {
       },
       // Your own data
       sender: {
-        company: "Shoe Cart",
-        address: "Shoe Cart Hub Kalamassery",
+        company: "Shoe Slogan",
+        address: "Shoe Slogan Hub Maradu",
         city: "Kochi",
         country: "India",
       },

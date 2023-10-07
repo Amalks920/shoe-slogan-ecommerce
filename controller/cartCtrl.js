@@ -98,7 +98,8 @@ const addToCartPost=async (req, res) => {
       const cart = await cartModal.findById(cartId);
 
       if (!cart) {
-        return res.status(404).json({ error: "Cart not found" });
+        return res.redirect('/404')
+        //return res.status(404).json({ error: "Cart not found" });
       }
 
       const productIndex = cart.products.findIndex(
