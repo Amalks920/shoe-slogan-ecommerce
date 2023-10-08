@@ -14,6 +14,7 @@ const stateErr = document.querySelector("#staterr");
 const mobileErr = document.querySelector("#mobileErr");
 const pincodeErr=document.querySelector('#pincodeErr');
 
+
 addressForm.addEventListener("submit", function (event) {
   let isValid = true;
   inputs.forEach((input, index) => {
@@ -113,6 +114,8 @@ cancelModalBtn.addEventListener("click", function () {
   modalBg.style.display = "none";
   deleteModal.style.display = "none";
 });
+
+
 
 deleteModalBtn.addEventListener("click", function () {
   handleDelete(index);

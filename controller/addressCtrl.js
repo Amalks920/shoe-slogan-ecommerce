@@ -1,6 +1,7 @@
 const categoryModal = require("../model/categoryModal");
 const addressModel=require('../model/addressModal');
 const walletModal = require("../model/walletModal");
+const { findAddress, EditAddress } = require("../helper/addressHelper");
 
 const addAddressPost= async (req, res) => {
     try {
@@ -82,6 +83,26 @@ const addAddressPost= async (req, res) => {
     }
   }
 
+  const editAddress=async(req,res,next)=>{
+
+    let addressIndex=req.params.index
+    req.session.addressIndex=addressIndex
+    let userId=req.session.user._id;
+    const selectedAddress=await findAddress(addressIndex,userId)
+    res.render('user/edit-address',{layout:'./layout/homeLayout.ejs'
+    ,selectedAddress:selectedAddress,isLoggedIn:true})
+
+  }
+
+  const editAddressPost=async(req,res,next)=>{
+    let address=req.body;
+    let addressIndex=req.session.addressIndex;
+    let userId=req.session.user._id
+    const updated=await EditAddress(address,addressIndex,userId)
+    console.log(updated)
+    res.redirect('/user-dashboard')
+  }
+
 
   const userOverview=async(req,res,next)=>{
     let userId=req.session.user._id
@@ -96,5 +117,5 @@ const addAddressPost= async (req, res) => {
   module.exports={
     addAddressPost,
     deleteAddress,selectAddress,
-    userOverview
+    userOverview,editAddress,editAddressPost
   }

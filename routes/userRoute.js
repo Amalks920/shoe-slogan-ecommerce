@@ -47,6 +47,8 @@ const {
   deleteAddress,
   selectAddress,
   userOverview,
+  editAddress,
+  editAddressPost,
 } = require("../controller/addressCtrl");
 
 const {
@@ -108,6 +110,18 @@ router.post(
   authorizationMiddleware,
   selectAddress
 );
+
+router.get(
+  '/edit-address/:index',
+  setCacheControl,
+  authorizationMiddleware,
+  editAddress
+)
+
+router.post(
+  '/edit-address',
+  editAddressPost
+)
 
 router.get(
   "/user-overview",
