@@ -50,11 +50,19 @@
                         <div class="col col-check flex-grow-0">
                      
                         </div>
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                        <div class="col-lg-2 col-sm-2 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
                              
                                 <div class="info">
                                     <h6 class="mb-0">Order ID</h6>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 col-sm-2 col-8 flex-grow-1 col-name">
+                            <a class="itemside" href="#">
+                             
+                                <div class="info">
+                                    <h6 class="mb-0">Address</h6>
                                 </div>
                             </a>
                         </div>
@@ -82,11 +90,24 @@
                         <div class="col col-check flex-grow-0">
     
                         </div>
-                        <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
+                        <div class="col-lg-2 col-sm-2 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
                      
                                 <div class="info">
                                     <h6 class="mb-0"><%=order?._doc._id %></h6>
+                                </div>
+                            </a>
+                        </div> 
+                        <div class="col-lg-2 col-sm-2 col-8 flex-grow-1 col-name">
+                            <a class="itemside" href="#">
+                     
+                                <div class="info">
+                                    <p class="mb-0"><%=order?._doc.address[0].city %></p>
+                                    <p class="mb-0"><%=order?._doc.address[0].address %></p>
+                                    <p class="mb-0"><%=order?._doc.address[0].pincode %></p>
+                                    <p class="mb-0"><%=order?._doc.address[0].state %></p>
+                                    <p class="mb-0"><%=order?._doc.address[0].mobileNumber %></p>
+
                                 </div>
                             </a>
                         </div> 

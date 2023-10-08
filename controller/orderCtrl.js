@@ -57,8 +57,11 @@ const placeOrder = async (req, res, next) => {
 
    
 
-    const address = await addressModal.findOne({ user: userId });
-
+    let address = await addressModal.findOne({ user: userId });
+    address=address.address.filter((address,index)=>{
+      return address.isSelected===true;
+    })
+    console.log(address)
 
     const orderProducts = cart[0].items;
     let grandTotal = req.body.totalAmountAfterCoupon;
@@ -70,7 +73,7 @@ const placeOrder = async (req, res, next) => {
       items: orderProducts,
       totalAmount: grandTotal,
       paymentMode: paymentMode,
-      address: address._id,
+      address: address,
       coupon: coupon,
     });
 
@@ -146,6 +149,7 @@ const placeOrder = async (req, res, next) => {
     await cartModal.deleteOne({ user: req.session.user._id });
     res.status(200).json({ response: order });
   } catch (error) {
+    console.log(error)
     res.redirect('/404')
   }
 };

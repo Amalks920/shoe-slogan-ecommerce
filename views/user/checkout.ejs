@@ -152,23 +152,23 @@
           <a href="/get-cart"><h4 >Continue to basket</h4></a>
           <ul id="checkout-list">
             <% cart?.products.forEach((product,index)=>{ %>
-            <li style="color: black; font-size: larger;">
+            <li style="color: black; font-size: larger;" style="color: black;font-weight: bold;">
               Product<%=index+1 %> <i>-</i>
               
               <%if(product?.product?.offerPrice===0){ %>
-                <span>₹<%=product?.product?.price -%> </span>
+                <span style="color: black;font-weight: bold;">₹<%=product?.product?.price -%> </span>
               <% }else{ %>
-                <span>₹<%=product?.product?.offerPrice -%> </span>
+                <span style="color: black;font-weight: bold;">₹<%=product?.product?.offerPrice -%> </span>
               <% } %>
               
             </li>
             <% })%>
-            <li style="color: black;">Total Service Charges <i>-</i> <span>₹00.00</span></li>
+            <li style="color: black; font-weight: bold;">Discount : <i>-</i> <span id="discount-coupon">0</span></li>
 
-            <li style="color: black;">
+            <li style="color: black; font-weight: bold;">
               Total <i>-</i>
               
-                <span id="total-amount">
+                <span id="total-amount" style=" font-weight: bold;">
                   <% 
                   var total = cart?.products.map((product) => { 
                     if (product?.product?.offerPrice === 0) {
@@ -189,7 +189,7 @@
 
 
             </li>
-            <li id="price-after-coupon-el">
+            <li id="price-after-coupon-el" style="color:black; font-weight: bold;">
               Price After Coupon  <span id="priceAfterCoupon"><%=total %></span>
             </li>
           </ul>
@@ -540,6 +540,7 @@
   const walletBtn=document.querySelector('#wallet-btn')
   const walletBalanceEl=document.querySelector('.wallet-balance')
   const walletErr=document.querySelector('#wallet-err');
+  const discountCoupon=document.querySelector('#discount-coupon');
 
   walletBalance=walletBalanceEl.getAttribute('data-id')
   let paymentMode;
@@ -694,10 +695,18 @@ selectBtn.addEventListener('click',function () {
 })
 
 closeBtn.addEventListener('click', function () {
- 
+  discountAmount=JSON.parse(localStorage.getItem('coupon'))?.discountAmount
+  if(discountAmount) discountCoupon.textContent=discountAmount;
+  else discountCoupon.textContent=0;
+
   modalBg.style.display="none"
   couponModal.style.display="none"
   location.reload(true)
 
 })
+
+discountAmount=JSON.parse(localStorage.getItem('coupon'))?.discountAmount;
+ if(discountAmount) discountCoupon.textContent=discountAmount;
+ else discountCoupon.textContent=0;
+ 
 </script>

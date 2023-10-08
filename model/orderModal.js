@@ -56,8 +56,8 @@ const orderSchema = new mongoose.Schema({
         type: Object,
     },
 	address: {
-	 	type: mongoose.Schema.ObjectId,
-		ref:'Address'
+	 	type: Array,
+		required:true,
 	},
 
 	coupon: {
