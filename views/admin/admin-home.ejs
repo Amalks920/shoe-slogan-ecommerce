@@ -230,14 +230,14 @@
 
         </div>
 
-        <div class="col-xl-4 col-lg-12" style="display: none;">
+        <div class="col-xl-4 col-lg-12">
             <div class="card mb-4">
                 <article class="card-body">
-                    <h5 class="card-title">Revenue Base on Area</h5>
-                    <canvas id="myChart2" height="217"></canvas>
+                    <h5 class="card-title">Revenue Base on Category</h5>
+                    <canvas id="myBarChart" height="217"></canvas>
                 </article>
             </div>
-            <div class="card mb-4">
+            <div class="card mb-4" style="display: none;">
                 <article class="card-body">
                     <h5 class="card-title">Marketing Chanel</h5>
                     <span class="text-muted font-xs">Facebook</span>
@@ -303,6 +303,10 @@
                 </div>
             </div>
         </header>
+
+
+
+
         <div class="card-body">
             <div class="table-responsive">
                 <div class="table-responsive">
@@ -569,4 +573,35 @@
 
     fetchMonthlyData()
 
+</script>
+
+<script>
+    const ctlx2=document.getElementById('myBarChart').getContext('2d')
+    async  function fetchCateogryWiseSales () {
+        console.log('hiiiiii')
+        const response=await  fetch('/admin/categorywise-sales')
+        const data=await response.json();
+        console.log(data)
+        let chart= new Chart(ctlx2,{
+        type:'bar',
+        data:{
+            labels:['men','women','kids'],
+            datasets:[
+                {
+                    label:'sales',
+                    data:[
+                        489,
+                        489,
+                        887
+                    ]
+                }
+            ]
+        },
+        options:{}
+    })
+
+
+    }
+
+fetchCateogryWiseSales();
 </script>

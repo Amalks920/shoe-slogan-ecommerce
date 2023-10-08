@@ -2,6 +2,7 @@ const orderModal = require("../model/orderModal")
 const moment=require('moment')
 const excel=require('exceljs')
 const puppeteer = require("puppeteer");
+const { findCategoryWiseOrders } = require("../helper/salesHelper");
 
 
 const getSalesReport=async(req,res,next)=>{
@@ -405,11 +406,15 @@ const monthlyReport = async (req, res) => {
         }
       };
     
-
+const categoryWiseSales=async (req,res,next)=>{
+    const orders= await findCategoryWiseOrders()
+    console.log(orders)
+    res.json({response:orders})
+}
 
       
 
 module.exports={
     getSalesReport,salesReport,downloadReports,
-    monthlyReport
+    monthlyReport,categoryWiseSales
 }

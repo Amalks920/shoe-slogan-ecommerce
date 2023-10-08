@@ -14,7 +14,8 @@ const { set } = require("lodash");
 const { getBannerManagementPage, addBannerPost, getEditBanner, editBanner } = require("../controller/bannerCtrl");
 
 const {getAddOffers, viewOffers, addOffer, getEditOffers, editOffer, viewOfferProducts, removeOffer}=require('../controller/offerCtrl');
-const { getSalesReport, salesReport, downloadReports, monthlyReport } = require("../controller/salesReportCtrl");
+const { getSalesReport, salesReport, downloadReports, monthlyReport, categoryWiseSales } = require("../controller/salesReportCtrl");
+const categoryModal = require("../model/categoryModal");
 
 
 
@@ -80,7 +81,7 @@ router.post('/remove-offer/:productId',setCacheControl,adminAuthorizationMiddlew
 router.get('/sales-report',setCacheControl,adminAuthorizationMiddleware,salesReport)
 router.get('/reports/sales/download/:type',setCacheControl,adminAuthorizationMiddleware,downloadReports);
 router.get("/monthly-report",setCacheControl,adminAuthorizationMiddleware, monthlyReport)
-
+router.get('/categorywise-sales',setCacheControl,adminAuthorizationMiddleware,categoryWiseSales)
 
 module.exports = router
 
