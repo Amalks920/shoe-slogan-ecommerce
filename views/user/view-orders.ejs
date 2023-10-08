@@ -35,6 +35,11 @@
                     <h3>Payment Mode </h3>
                     <p><%=order.paymentMode -%></p>
                 </div>
+
+                <div>
+                    <h3>User Address </h3>
+                    <p><%=order?.address[0]?.city -%></p>
+                </div>
                 <div>
                     <h3> </h3>
                     <a href="/order-details/<%=order._id -%>" style="color: blue;">View Details</a>

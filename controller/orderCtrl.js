@@ -67,6 +67,7 @@ const placeOrder = async (req, res, next) => {
     let grandTotal = req.body.totalAmountAfterCoupon;
     let paymentMode = req.body.paymentMode;
     let coupon = req?.body?.couponId;
+    let discountAmount=req?.body?.discountAmount
 
     const order = await orderModal.create({
       user: userId,
@@ -75,6 +76,7 @@ const placeOrder = async (req, res, next) => {
       paymentMode: paymentMode,
       address: address,
       coupon: coupon,
+      discountAmount:discountAmount
     });
 
     let errorMessages = [];
@@ -421,6 +423,7 @@ const viewOrdersAdmin = async (req, res, next) => {
           totalAmount: 1,
           isPaid: 1,
           productcount: { $size: "$items" },
+          address:1
         },
       },
       {

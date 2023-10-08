@@ -589,7 +589,7 @@
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ totalAmountAfterCoupon, paymentMode,couponId:couponData?.couponId }),
+      body: JSON.stringify({ totalAmountAfterCoupon, paymentMode,couponId:couponData?.couponId,discountAmount:couponData?.discountAmount }),
     })
       .then((response) => {
         //

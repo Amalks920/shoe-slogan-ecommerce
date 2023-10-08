@@ -46,7 +46,7 @@
           <table class="timetable_sub">
             <thead>
             
-              <% console.log(orders?.address.address[0]) %>
+              
                 
               <tr>
                 <th>SL No.</th>
@@ -104,12 +104,67 @@
                 </td>
               </tr>
             <% }) %>
+
+ 
+
             
             </tbody>
           </table>
+
+          
+  <div id="pdf"></div>
+          <a  id="invoice" style="display: none;">Download Invoice</a>
+          <button  id="cancel-btn" style="margin-top: 40px;background-color: red;color:white; width: 200px;height: 60px;display: none;">Cancel Order</button>
+        </div>
+
+        <div class="checkout-right" style="margin-bottom: 50px;">
+          <table class="timetable_sub">
+            <thead>
+            
+              
+                
+              <tr>
+                <th style="background-color: antiquewhite;color: black !important;">Address</th>
+                <th style="background-color: antiquewhite;color: black !important;">Discount Amount</th>
+                <th style="background-color: antiquewhite;color: black !important;">Total</th>
+
+               
+              </tr>
+           
+            </thead>
+            <tbody>
+
+               <input  name="userId" id="userId" type="text" hidden>
+
+              <tr class="rem1">
+                <td class="invert" style="display: flex;flex-direction: column;align-items: start;">
+                  <p style="font-weight: bold;"><%=orders?.address[0]?.address%></p>
+                  <p style="font-weight: bold;"><%=orders?.address[0]?.city%></p>
+                  <p style="font-weight: bold;"><%=orders?.address[0]?.state%></p>
+                  <p style="font-weight: bold;"><%=orders?.address[0]?.pincode%></p>
+                  <p style="font-weight: bold;"><%=orders?.address[0]?.mobileNumber%></p>
+                </td>
+                <td class="invert-image">
+                 <p style="color: black;font-weight: bold;"><%=orders?.discountAmount %></p> 
+                </td>
+             
+
+                <td class="invert">
+                  <p style="font-weight: bold;"><%=orders?.totalAmount %></p>
+								</td>
+
+              </tr>
+     
+
+ 
+
+            
+            </tbody>
+          </table>
+
           
   <div id="pdf" ></div>
-          <a  id="invoice">Download Invoice</a>
+          <button id="invoice" style="margin-right: 40px;height: 60px;padding: 0 30px;">Download Invoice</button>
           <button id="cancel-btn" style="margin-top: 40px;background-color: red;color:white; width: 200px;height: 60px;">Cancel Order</button>
         </div>
 

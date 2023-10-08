@@ -3,7 +3,7 @@
     <div class="content-header">
         <div>
             <h2 class="content-title card-title">Orders</h2>
-
+            
         </div>
 
     </div>
@@ -25,7 +25,7 @@
                         <a class="itemside" href="#">
 
                             <div class="info">
-                                <h4 class="mb-0">User</h4>
+                                <h4 class="mb-0">User Address</h4>
                             </div>
                         </a>
                     </div>
@@ -48,7 +48,7 @@
 
                 </div>
             </article>
-
+          
             <% orders.forEach((order,index)=>{ %>
 
        
@@ -68,7 +68,14 @@
                         <a class="itemside" href="#">
 
                             <div class="info">
-                                <h4 class="mb-0" style="font-size: smaller;"><%=order.user %></h4>
+                                <h4 class="mb-0" style="font-size: smaller;"><%=order?.address[0]?.city %></h4>
+                                <h4 class="mb-0" style="font-size: smaller;"><%=order?.address[0]?.address %></h4>
+                                <h4 class="mb-0" style="font-size: smaller;"><%=order?.address[0]?.state %></h4>
+                                <h4 class="mb-0" style="font-size: smaller;"><%=order?.address[0]?.pincode %></h4>
+                                <h4 class="mb-0" style="font-size: smaller;"><%=order?.address[0]?.mobileNumber %></h4>
+
+
+
                             </div>
                         </a>
                     </div>
