@@ -8,7 +8,7 @@ const walletModal = require("../model/walletModal");
 const { disconnect } = require("mongoose");
 const couponModal = require("../model/couponModal");
 const { findReturnedPrdoucts } = require("../helper/productsHelper");
-const { createInvoice } = require("../helper/orderHelper");
+const { createInvoice, downloadInvoicePdf } = require("../helper/orderHelper");
 const easyinvoice=require('easyinvoice')
 const fs=require('fs')
 const { Readable } = require("stream");
@@ -223,6 +223,8 @@ const orderDetails = async (req, res, next) => {
     orders.items = orders?.items.filter((item, index) => {
       return item.status != "Cancelled";
     });
+
+    req.session.order=orders
     res.render("user/order-details.ejs", {
       layout: "./layout/homeLayout.ejs",
       isLoggedIn: true,
@@ -549,111 +551,9 @@ const returnedProducts=async(req,res,next)=>{
 
 
 const downloadInvoice = async (req, res, next) => {
-  try {
-    // const id = req.query.id;
-   
-    // const userId = req.session.user._id;
-    // const result = await orderModal.findById(id);
-    // console.log(result.items[0].productId);
-    // const product = await productModal.findById(result.items[0].product);
-
-   
-
-    // const User = await user.findOne({ _id: userId });
-    // console.log("USER: ", User);
-    // console.log("RESULT: ", result);
-    // console.log("helele");
-    //   const address = await User.address.find(
-    //     (element) => {
-    //         console.log(element._id,'plkmjujk')
-    //         console.log(result.address[0]._id,'plkmjujk')
-    //         element._id == result.address[0]._id
-    //     }
-    //   );
-
-    const order = {
-      // _id: id,
-      // totalAmount: result.totalAmount,
-      // date: result.createdAt, // Use the formatted date
-      // paymentMethod: result.paymentMode,
-      // orderStatus: result.orderStatus,
-      // discount: result.discount,
-      // name: result.address[0].name,
-      // number: result.address[0].number,
-      // pincode: result.address[0].pinCode,
-      // area: result.address[0].area,
-      // landmark: result.address[0].landmark,
-      // state: result.address[0].state,
-      // house: result.address[0].house,
-      // items: result.items,
-    };
-  
-    //set up the product
-    // const products = order.items.map((items) => ({
-    //   quantity: parseInt(items.quantity),
-    //   description: product.name,
-
-    //   price: parseInt(product.sale_price),
-    //   total: parseInt(result.finalAmount),
-    //   "tax-rate": 0,
-    // }));
-    const isoDateString ="dlks";
-    const isoDate = new Date(isoDateString);
-
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDate = isoDate.toLocaleDateString("en-US", options);
-    const data = {
-      customize: {
-        //  "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html
-      },
-      images: {
-        // The invoice background
-        background: "https://public.easyinvoice.cloud/img/watermark-draft.jpg",
-      },
-      // Your own data
-      sender: {
-        company: "Shoe Slogan",
-        address: "Shoe Slogan Hub Maradu",
-        city: "Kochi",
-        country: "India",
-      },
-      client: {
-        company: "Customer Address",
-        zip: 'sadlkfj',
-        city: "ldsjflsdjf",
-        address: 'sldfjk',
-        // "custom1": "custom value 1",
-        // "custom2": "custom value 2",
-        // "custom3": "custom value 3"
-      },
-      information: {
-        // Invoice number
-        number: "order:",
-        // ordered date
-        date: formattedDate,
-      },
-      products: "products",
-      "bottom-notice": "Happy shoping and visit shoe cart again",
-    };
-
-    const pdfResult = await easyinvoice.createInvoice(data);
-    const pdfBuffer = Buffer.from(pdfResult.pdf, "base64");
-
-    // Set HTTP headers for the PDF response
-    res.setHeader("Content-Disposition", 'attachment; filename="invoice.pdf"');
-    res.setHeader("Content-Type", "application/pdf");
-
-    // Create a readable stream from the PDF buffer and pipe it to the response
-    const pdfStream = new Readable();
-    pdfStream.push(pdfBuffer);
-    pdfStream.push(null);
-
-    pdfStream.pipe(res);
-  } catch (err) {
-    console.log(err)
-    next(err);
-    //   res.status(500).json({ error: error.message });
-  }
+    const order=req.session.order;
+    const file=await downloadInvoicePdf(order)
+    res.download(file)
 };
 
 

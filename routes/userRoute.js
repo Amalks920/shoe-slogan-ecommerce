@@ -120,6 +120,8 @@ router.get(
 
 router.post(
   '/edit-address',
+  setCacheControl,
+  authorizationMiddleware,
   editAddressPost
 )
 

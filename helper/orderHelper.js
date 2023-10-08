@@ -1,5 +1,6 @@
 var easyinvoice = require('easyinvoice');
 const fs=require('fs')
+const puppeteer = require("puppeteer");
 
 
 const createInvoice=()=>{
@@ -123,6 +124,159 @@ const createInvoice=()=>{
 }
 
 
+const downloadInvoicePdf=(order)=>{
+
+    return new Promise(async (resolve,reject)=>{
+
+        try {
+            const browser = await puppeteer.launch()
+            const page = await browser.newPage()
+
+
+            const content = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Invoice</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f7f7f7;
+                        margin: 0;
+                        padding: 0;
+                    }
+            
+                    .text-center {
+                        text-align: center;
+                    }
+            
+                    .table-container {
+                        width: 80%;
+                        margin: 0 auto;
+                        margin-top: 1.5rem;
+                        border-radius: 5px;
+                        background-color: #fff;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        padding: 20px;
+                    }
+            
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-bottom: 1rem;
+                    }
+            
+                    th, td {
+                        text-align: left;
+                        padding: 10px;
+                        border-bottom: 1px solid #ddd;
+                    }
+            
+                    th {
+                        background-color: #f2f2f2;
+                    }
+            
+                    .d-flex-column {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                    }
+            
+                    .fw-bold {
+                        font-weight: bold;
+                    }
+            
+                    .total-row {
+                        background-color: #f2f2f2;
+                    }
+            
+                    .total-row td {
+                        border-top: 1px solid #ddd;
+                    }
+            
+                    * {
+                        font-size: 14px;
+                        color: #444;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="text-center">
+                    <h1>Invoice</h1>
+                </div>
+            
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">SL. No</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Offer</th>
+                                <th scope="col">Total Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${order.items.map((item, index) => `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${item.productId.productname}</td>
+                                    <td>${item.productId.price}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>${'offer'}</td>
+                                    <td>${item.quantity * item.productId.price}</td>
+                                </tr>
+                            `).join('')}
+                            <tr class="total-row">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="d-flex-column">
+                                    <span>Discount:</span>
+                                        <span>Total:</span>
+                                       
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex-column">
+                                        <span>${order.discountAmount}</span>
+                                        <span>${order.totalAmount}</span>
+                                       
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </body>
+            </html>
+            `;
+            
+
+    await page.setContent(content)
+    await page.pdf({ path: 'invoice.pdf', format: 'A4' })
+
+    await browser.close()
+
+    const file = `${__dirname}/../invoice.pdf`
+   
+            resolve(file)   
+        } catch (error) {
+            reject(error)
+        }
+
+    })
+
+}
+
+
 module.exports={
-    createInvoice
+    createInvoice,downloadInvoicePdf
 }
