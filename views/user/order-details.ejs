@@ -51,7 +51,7 @@
               <tr>
                 <th>SL No.</th>
                 <th>Product</th>
-                <th>Quality</th>
+                <th>Quantity</th>
                 <th>Product Name</th>
   
                 <th>Price</th>
@@ -85,7 +85,7 @@
 									<div class="quantity">
 										<div class="quantity-select">
 											
-											<div class=""><span id="value"><%=item.quantity %></span></div>
+											<div class=""><span id="value" style="font-size: x-large;font-weight: 600;"><%=item.quantity %></span></div>
 										</div>
 									</div>
 								</td>
@@ -129,11 +129,13 @@
             
               
                 
-              <tr>
-                <th style="background-color: antiquewhite;color: black !important;">Address</th>
-                <th style="background-color: antiquewhite;color: black !important;">Discount Amount</th>
-                <th style="background-color: antiquewhite;color: black !important;">Total</th>
-
+              <tr style="font-size: larger;">
+                <th style="background-color: antiquewhite;color: black !important;font-size: x-large;">Address</th>
+                <th style="background-color: antiquewhite;color: black !important;font-size: x-large;">Discount Amount</th>
+                <th style="background-color: antiquewhite;color: black !important;font-size: x-large;">Total</th>
+                <th style="background-color: antiquewhite;color: black !important;font-size: x-large;">Status</th>
+                <th style="background-color: antiquewhite;color: black !important;font-size: x-large;">Payment Mode</th>
+                <th style="background-color: antiquewhite;color: black !important;font-size: x-large;">Ordered Date</th>
                
               </tr>
            
@@ -144,19 +146,30 @@
 
               <tr class="rem1">
                 <td class="invert" style="display: flex;flex-direction: column;align-items: start;">
-                  <p style="font-weight: bold;"><%=orders?.address[0]?.address%></p>
-                  <p style="font-weight: bold;"><%=orders?.address[0]?.city%></p>
-                  <p style="font-weight: bold;"><%=orders?.address[0]?.state%></p>
-                  <p style="font-weight: bold;"><%=orders?.address[0]?.pincode%></p>
-                  <p style="font-weight: bold;"><%=orders?.address[0]?.mobileNumber%></p>
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.address[0]?.address%></p>
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.address[0]?.city%></p>
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.address[0]?.state%></p>
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.address[0]?.pincode%></p>
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.address[0]?.mobileNumber%></p>
                 </td>
                 <td class="invert-image">
-                 <p style="color: black;font-weight: bold;"><%=orders?.discountAmount %></p> 
+                 <p style="color: black;font-weight: bold;font-size: large;"><%=orders?.discountAmount %></p> 
                 </td>
              
 
                 <td class="invert">
-                  <p style="font-weight: bold;"><%=orders?.totalAmount %></p>
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.totalAmount %></p>
+								</td>
+
+                <td class="invert">
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.orderStatus %></p>
+								</td>
+
+                <td class="invert">
+                  <p style="font-weight: bold;font-size: large;"><%=orders?.paymentMode %></p>
+								</td>
+                <td class="invert">
+                  <p style="font-weight: bold;font-size: large;"><%=formattedDate %></p>
 								</td>
 
               </tr>

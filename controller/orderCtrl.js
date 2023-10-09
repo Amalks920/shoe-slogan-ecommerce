@@ -11,6 +11,7 @@ const { createInvoice, downloadInvoicePdf } = require("../helper/orderHelper");
 const easyinvoice=require('easyinvoice')
 const fs=require('fs')
 const { Readable } = require("stream");
+const moment=require('moment')
 
 
 const placeOrder = async (req, res, next) => {
@@ -200,7 +201,7 @@ const viewOrders = async (req, res, next) => {
     .skip(currentPage*ORDER_PER_PAGE)
     .limit(ORDER_PER_PAGE)
     
-
+   
     res.render("user/view-orders", {
       layout: "./layout/homeLayout.ejs",
       isLoggedIn: true,
@@ -222,12 +223,14 @@ const orderDetails = async (req, res, next) => {
     // orders.items = orders?.items.filter((item, index) => {
     //   return item.status != "Cancelled";
     // });
-
+    const inputDate=orders.createdAt
     req.session.order=orders
+    const formattedDate = moment(inputDate).format("YYYY-MM-DD HH:mm:ss");
     res.render("user/order-details.ejs", {
       layout: "./layout/homeLayout.ejs",
       isLoggedIn: true,
       orders: orders,
+      formattedDate
     });
   } catch (error) {
     res.redirect('/404')
@@ -395,18 +398,18 @@ const viewOrdersAdmin = async (req, res, next) => {
     }
 
     const findOrders = await orderModal.find({
-      orderStatus: { $nin: ["Delivered", "Cancelled"] },
+      // orderStatus: { $nin: ["Delivered", "Cancelled"] },
     });
     const noOfDocuments = findOrders.length / ITEMS_PER_PAGE;
 
     const orders = await orderModal.aggregate([
-      {
-        $match: {
-          orderStatus: {
-            $nin: ["Delivered", "Cancelled"],
-          },
-        },
-      },
+      // {
+      //   $match: {
+      //     orderStatus: {
+      //       $nin: ["Delivered", "Cancelled"],
+      //     },
+      //   },
+      // },
       {
         $lookup: {
           from: "users", 
@@ -418,7 +421,7 @@ const viewOrdersAdmin = async (req, res, next) => {
       {
         $project: {
           user: { $arrayElemAt: ["$user.username", 0] },
-          user: { $arrayElemAt: ["$user._id", 0] },
+          // user: { $arrayElemAt: ["$user._id", 0] },
           orderStatus: 1,
           paymentMode: 1,
           totalAmount: 1,
@@ -441,7 +444,7 @@ const viewOrdersAdmin = async (req, res, next) => {
     ]);
 
   
-
+console.log(orders)
     res.render("admin/view-orders", {
       layout: "./layout/adminLayout.ejs",
       orders: orders,
@@ -546,8 +549,6 @@ const returnedProducts=async(req,res,next)=>{
 
 
 }
-
-
 
 const downloadInvoice = async (req, res, next) => {
     const order=req.session.order;
