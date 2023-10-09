@@ -9,15 +9,16 @@ const minusBtns=document.querySelectorAll('.value-minus')
 const plusBtns=document.querySelectorAll('.value-plus')
 const qtyValue=document.querySelectorAll('.value')
 const userId=document.querySelector('#userId').value;
-console.log(qtyValue[0].textContent)
+//console.log(qtyValue[0].textContent)
 console.log(orderId)
 let productId
 let qty
 
 productCancelBtns.forEach(function (cancelBtn, index) {
   cancelBtn.addEventListener("click", function (event) {
-    qty=Number(qtyValue[index].textContent)
-    console.log(qty)
+    
+    //qty=Number(qtyValue[index].textContent)
+   // console.log(qty)
    productId= cancelBtn.getAttribute('data-id')
     modal.style.display = "block";
     cancelProductModel.style.display = "block";
@@ -42,7 +43,7 @@ function cancelProduct(orderId,productId) {
     },
     body: JSON.stringify({
       status:"Cancelled",
-      qty:qty
+      qty:0
   }) 
   })
     .then((response) => response.json())

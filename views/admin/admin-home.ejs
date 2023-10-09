@@ -12,7 +12,7 @@
             <a href="#" class="btn btn-primary"><i class="text-muted material-icons md-post_add"></i>Create report</a>
         </div>
     </div>
-    <div class="row" style="margin-left: 100px;">
+    <div class="row" >
         <div class="col-lg-3">
             <div class="card card-body mb-4">
                 <article class="icontext">
@@ -67,7 +67,7 @@
             </div>
         </div>
     </div>
-    <div class="row" style="margin-left: 200px;">
+    <div class="row">
         <div class="col-xl-8 col-lg-12">
             <div class="card mb-4">
                 <article class="card-body">
@@ -581,19 +581,16 @@
         console.log('hiiiiii')
         const response=await  fetch('/admin/categorywise-sales')
         const data=await response.json();
-        console.log(data)
+        let catArray=data.response.catArray;
+        let totalRevenue=data.response.totalRevenue;
         let chart= new Chart(ctlx2,{
         type:'bar',
         data:{
-            labels:['men','women','kids'],
+            labels:catArray,
             datasets:[
                 {
                     label:'sales',
-                    data:[
-                        489,
-                        489,
-                        887
-                    ]
+                    data:totalRevenue
                 }
             ]
         },

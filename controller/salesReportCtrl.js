@@ -4,7 +4,6 @@ const excel=require('exceljs')
 const puppeteer = require("puppeteer");
 const { findCategoryWiseOrders } = require("../helper/salesHelper");
 
-
 const getSalesReport=async(req,res,next)=>{
     try {
         res.render('admin/sales-report',{layout:'./layout/adminLayout.ejs'})
@@ -407,9 +406,25 @@ const monthlyReport = async (req, res) => {
       };
     
 const categoryWiseSales=async (req,res,next)=>{
+
+  try {
+
     const orders= await findCategoryWiseOrders()
-    console.log(orders)
-    res.json({response:orders})
+    let catArray=[]
+    let totalRevenue=[]
+    orders.forEach((el,index)=>{
+      catArray.push(el._id)
+      totalRevenue.push(el.totalRevenue)
+    })
+    let response={
+      catArray,totalRevenue
+    }
+    res.status(200).json({response:response})
+    
+  } catch (error) {
+      console.log(error)
+  }
+
 }
 
       

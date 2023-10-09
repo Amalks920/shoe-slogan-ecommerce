@@ -25,16 +25,24 @@ const findCategoryWiseOrders=()=>{
                   $unwind: '$product' // Unwind the product array
                 },
                 {
+                  $lookup:{
+                    from:'categories',
+                    localField:'product.productCategory',
+                    foreignField:'_id',
+                    as:"category"
+                  }
+                },
+                {
+                  $unwind: '$category' // Unwind the category array
+                },
+                {
                   $group: {
-                    _id: '$product.productCategory', // Group by category
+                    _id: '$category.productCategory', // Group by category
                     totalRevenue: { $sum: {$multiply:['$product.price','$items.quantity']} } // Calculate the sum of totalAmount
                   }
                 }
               ]);
-              
-              
-            console.log(orders)
-            console.log('sdlkflkjsdlorderssssssss')
+            
             resolve(orders)
             
         } catch (error) {

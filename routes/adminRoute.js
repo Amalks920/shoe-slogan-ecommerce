@@ -10,7 +10,6 @@ const { addCategory, addCategoryPost, viewCategory, deleteCategory } = require('
 const { getViewProducts, getEditProduct, editProductPost, deleteImage } = require("../controller/productCtrl");
 const { getViewUsers, blockUser } = require('../controller/userCtrl')
 const {viewOrdersAdmin,editOrder, getOrderProducts, cancelOrder, returnedProducts, downloadInvoice}=require('../controller/orderCtrl');
-const { set } = require("lodash");
 const { getBannerManagementPage, addBannerPost, getEditBanner, editBanner } = require("../controller/bannerCtrl");
 
 const {getAddOffers, viewOffers, addOffer, getEditOffers, editOffer, viewOfferProducts, removeOffer}=require('../controller/offerCtrl');

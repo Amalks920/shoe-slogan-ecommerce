@@ -5,7 +5,6 @@ const productModal = require("../model/productModal");
 const razorpay = require("../config/razorpay");
 const Razorpay = require("razorpay");
 const walletModal = require("../model/walletModal");
-const { disconnect } = require("mongoose");
 const couponModal = require("../model/couponModal");
 const { findReturnedPrdoucts } = require("../helper/productsHelper");
 const { createInvoice, downloadInvoicePdf } = require("../helper/orderHelper");
@@ -176,7 +175,7 @@ const viewOrders = async (req, res, next) => {
       {
         $match: {
           orderStatus: {
-            $nin: ["Delivered", "Cancelled"],
+            $nin: ["Delivered"],
           },
         },
       },
@@ -220,9 +219,9 @@ const orderDetails = async (req, res, next) => {
       .findById(req.params.id)
       .populate("items.productId")
       .populate("address");
-    orders.items = orders?.items.filter((item, index) => {
-      return item.status != "Cancelled";
-    });
+    // orders.items = orders?.items.filter((item, index) => {
+    //   return item.status != "Cancelled";
+    // });
 
     req.session.order=orders
     res.render("user/order-details.ejs", {
