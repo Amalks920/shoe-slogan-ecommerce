@@ -1,7 +1,7 @@
 var easyinvoice = require('easyinvoice');
 const fs=require('fs')
 const puppeteer = require("puppeteer");
-
+const orderModal = require('../model/orderModal');
 
 const createInvoice=()=>{
     console.log('osdifj')
@@ -276,7 +276,20 @@ const downloadInvoicePdf=(order)=>{
 
 }
 
+const orderPagingation=(page,itemsPerPage)=>{
+    return new Promise(async(resolve,reject)=>{
+        try {
+        const orders=await orderModal.find({})
+        let ordersLength=Math.ceil(orders.length/itemsPerPage)
+            resolve(ordersLength)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports={
-    createInvoice,downloadInvoicePdf
+    createInvoice,downloadInvoicePdf,
+    orderPagingation
 }

@@ -99,8 +99,8 @@
                         <p><%=order.orderStatus%></p>
                         <%}%>
                     </div>
-                   
-                    <input id="userId" type="text" value="<%=order?.user %>" hidden>
+                    <%console.log(order?.userId)%>
+                    <input id="userId" type="text" value="<%=order?.userId %>" hidden>
 
                     <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
                         <h4><%=order.totalAmount %></h4>
@@ -117,7 +117,7 @@
 
 
                 </div> 
-            <a href="/admin/order-products/<%=order._id %>">view products</a>
+            <a href="/admin/order-products/<%=order._id %>?page=0">view products</a>
             </article>
         
             <% }) %>

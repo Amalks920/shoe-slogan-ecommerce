@@ -2,7 +2,7 @@
 <section class="content-main">
     <div class="content-header">
         <div>
-            <h2 class="content-title card-title">Users</h2>
+            <h2 class="content-title card-title"></h2>
 
         </div>
 
@@ -25,7 +25,7 @@
                         <a class="itemside" href="#">
 
                             <div class="info">
-                                <h4 class="mb-0">User</h4>
+                                <h4 class="mb-0">Products</h4>
                             </div>
                         </a>
                     </div>
@@ -43,7 +43,11 @@
                     </div>
 
 
+
+
                 </div> 
+
+
             </article> 
 
         
@@ -82,15 +86,21 @@
                     <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
                         <h4>₹ <%=item.price %></h4></h4>
                     </div>
+                  
                     <div class="col-lg-2 col-sm-2 col-4 col-status" style="padding-left: 100px;">
-                        <h4>COD</h4>
+                        <h4><%=item.status%></h4>
                     </div>
+
+
                     
 
                 </div> 
             </article> 
             
             <% }) %>
+            <div  style="padding-left: 100px;margin-top: 30px;margin-left: 1200px;">
+                <h4>Discount Amount : <%=order.discountAmount%></h4>
+            </div>
 
        
           
@@ -98,13 +108,12 @@
     </div> 
     <div class="pagination-area mt-30 mb-50">
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-start">
-                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">16</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+            <ul class="pagination justify-content-start">\
+                <% for(var i=0;i<NO_OF_BTNS;i++){ %>
+
+                
+                <li class="page-item active"><a class="page-link" href="/admin/order-products/<%=order._id%>?page=<%=i %>"><%=i+1 %></a></li>
+                <% } %>
             </ul>
         </nav>
     </div>

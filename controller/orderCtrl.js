@@ -7,7 +7,7 @@ const Razorpay = require("razorpay");
 const walletModal = require("../model/walletModal");
 const couponModal = require("../model/couponModal");
 const { findReturnedPrdoucts } = require("../helper/productsHelper");
-const { createInvoice, downloadInvoicePdf } = require("../helper/orderHelper");
+const { createInvoice, downloadInvoicePdf, orderPagingation } = require("../helper/orderHelper");
 const easyinvoice=require('easyinvoice')
 const fs=require('fs')
 const { Readable } = require("stream");
@@ -239,6 +239,9 @@ const orderDetails = async (req, res, next) => {
 
 const getOrderProducts = async (req, res, next) => {
   try {
+    let page=req.query.page;
+    let itemsPerPage=9;
+    const NO_OF_BTNS=await orderPagingation(page,itemsPerPage)
     const order = await orderModal
       .findById(req.params.id)
       .populate("items.productId")
@@ -250,6 +253,7 @@ const getOrderProducts = async (req, res, next) => {
       isLoggedIn: true,
       order: order,
       req: req,
+      NO_OF_BTNS
     });
   } catch (error) {
     res.redirect('/404')
@@ -367,8 +371,9 @@ const cancelOrder = async (req, res, next) => {
       order.items.forEach((item) => {
         item.status = orderStatus;
       });
-
+     
       if (orderStatus === "Cancelled") {
+        console.log(orderStatus)
         if (order.paymentMode === "ONLINE" || order.paymentMode === "WALLET") {
           const wallet = await walletModal.updateOne(
             { user_id: userId },
@@ -376,6 +381,7 @@ const cancelOrder = async (req, res, next) => {
           );
         }
       }
+     
       await orderModal.findByIdAndUpdate(req.params.id, {
         orderStatus: orderStatus,
       });
@@ -383,6 +389,7 @@ const cancelOrder = async (req, res, next) => {
     await order.save();
     res.status(200).json({ msg: "success" });
   } catch (error) {
+    console.log(error)
     res.redirect('/404')
   }
 };
@@ -421,7 +428,7 @@ const viewOrdersAdmin = async (req, res, next) => {
       {
         $project: {
           user: { $arrayElemAt: ["$user.username", 0] },
-          // user: { $arrayElemAt: ["$user._id", 0] },
+           userId: { $arrayElemAt: ["$user._id", 0] },
           orderStatus: 1,
           paymentMode: 1,
           totalAmount: 1,
