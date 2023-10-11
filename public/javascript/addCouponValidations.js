@@ -1,100 +1,79 @@
-
 const promocodeInput=document.querySelector('#code');
 const submitForm=document.querySelector('#submit-form');
 const selectElement = document.querySelector('select[name="discountType"]');
 const descriptionInput=document.querySelector('#description');
-const discountAmount=document.querySelector('#discountAmount');
-const minimumAmount=document.querySelector('#minimumAmount');
-const maxRedemptions=document.querySelector('#maxRedemptions');
+const discountAmountInput=document.querySelector('#discountAmount');
+const minimumAmountInput=document.querySelector('#minimumAmount');
+const maxRedemptionsInput=document.querySelector('#maxRedemptions');
+const expirationDateInput=document.querySelector('#expirationDate');
 
-const selectedValue = selectElement.value;
-let isValid;
+//RegExp
+let promocodeRegExp= /^[A-Z][A-Z0-9]{5,19}$/
+let descriptionRegExp = /^[A-Za-z0-9\s.,!?'"()\-][A-Za-z0-9\s.,!?'"()\-]{0,500}[A-Za-z0-9\s.,!?'"()\-]$/;
+let discountAmountRegExp = /^\d+(\.\d{1,2})?$/;
 
-selectElement.addEventListener('change',function () {
-    if(selectElement.value==="") isValid=false
-})
 
-//validate promocode
-function validatePromoCode(value){
-   let promocodeRegExp= /^[A-Z][A-Z0-9]{5,19}$/
-    
-   return promocodeRegExp.test(value)
+submitForm.addEventListener('submit', function (event){
+const form=event.target
+const formData=new FormData(form)
+let promocode=formData.get('code').trim()
+let description=formData.get('description').trim()
+let discountAmount=formData.get('discountAmount')
+let discountType=formData.get('discountType')
+let minimumAmount=formData.get('minimumAmount')
+let maxRedemptions=formData.get('maxRedemptions')
+let expirationDate=formData.get('expirationDate')
+
+
+promocodeInput.classList.remove('is-invalid')
+descriptionInput.classList.remove('is-invalid')
+discountAmountInput.classList.remove('is-invalid')
+minimumAmountInput.classList.remove('is-invalid')
+maxRedemptionsInput.classList.remove('is-invalid')
+selectElement.classList.remove('is-invalid')
+expirationDateInput.classList.remove('is-invalid')
+
+if(!validate(promocodeRegExp,promocode)){
+  promocodeInput.classList.add('is-invalid')
+  event.preventDefault()
+}
   
+if(!validate(descriptionRegExp,description)){
+  descriptionInput.classList.add('is-invalid')
+  event.preventDefault()
 }
 
-function validateCouponDescription(value) {
-    if(value.length>100) return false
-    // Define the regular expression for coupon descriptions
-    let descriptionRegExp = /^[A-Za-z0-9\s.,!?'"()\-][A-Za-z0-9\s.,!?'"()\-]*$/;
-  
-    // Test the value against the regular expression
-    return descriptionRegExp.test(value);
-  }
-  
+if(!validate(discountAmountRegExp,discountAmount)){
+  discountAmountInput.classList.add('is-invalid')
+  event.preventDefault()
+}
 
-promocodeInput.addEventListener('input',function(event){
-    isValid=validatePromoCode(promocodeInput.value) 
-    if(isValid){
-        promocodeInput.style.border='1px solid green'
-    }else{
-        if(!promocodeInput.value.trim()==="") promocodeInput.style.border='none'
-        else promocodeInput.style.border='1px solid red'
-        
-    }
+if(!validate(discountAmountRegExp,minimumAmount)){
+  minimumAmountInput.classList.add('is-invalid')
+  event.preventDefault()
+}
+
+if(!validate(discountAmountRegExp,maxRedemptions)){
+ maxRedemptionsInput.classList.add('is-invalid')
+  event.preventDefault()
+}
+
+if(discountType===""){
+  selectElement.classList.add('is-invalid')
+  event.preventDefault()
+}
+
+if(expirationDate===""){
+  expirationDateInput.classList.add('is-invalid')
+  event.preventDefault()
+}
 })
 
-selectElement.addEventListener('input',function () {
-    if(selectElement.value!="") selectElement.style.border='none';
-})
+//validations
+function validate(regExp,value){
+   return regExp.test(value)
+}
 
-descriptionInput.addEventListener('input',function () {
-    isValid=validateCouponDescription(descriptionInput.value.trim())
-
-    if(isValid){
-        descriptionInput.style.border="1px solid green"
-    }else{
-        if(descriptionInput.value.trim()!="" && descriptionInput.value.trim().length <100) descriptionInput.style.border='none';
-        else descriptionInput.style.border="1px solid red"
-    }
-
-})
-
-
-
-
-
-
-
-
-submitForm.addEventListener('submit',function(event){
-    if(selectElement.value==="") {
-        selectElement.style.border="1px solid red"
-    }
-
-    if(promocodeInput.value===""){
-        promocodeInput.style.border='1px solid red'
-    }
-
-    if(descriptionInput.value===""){
-        descriptionInput.style.border="1px solid red"
-    }
-
-    if(discountAmount.value===""){
-        discountAmount.style.border="1px solid red"
-    }
-
-    if(maxRedemptions.value===""){
-        maxRedemptions.style.border="1px solid red"
-    }
-
-    if(minimumAmount.value===""){
-        minimumAmount.style.border="1px solid red"
-    }
-
-    if(!isValid)event.preventDefault()
-
-
-})
 
 
 const yesterday=new Date();

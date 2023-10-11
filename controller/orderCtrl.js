@@ -7,7 +7,7 @@ const Razorpay = require("razorpay");
 const walletModal = require("../model/walletModal");
 const couponModal = require("../model/couponModal");
 const { findReturnedPrdoucts } = require("../helper/productsHelper");
-const { createInvoice, downloadInvoicePdf, orderPagingation } = require("../helper/orderHelper");
+const { createInvoice, downloadInvoicePdf, orderPagingation, updateProducts } = require("../helper/orderHelper");
 const easyinvoice=require('easyinvoice')
 const fs=require('fs')
 const { Readable } = require("stream");
@@ -68,7 +68,18 @@ const placeOrder = async (req, res, next) => {
     let paymentMode = req.body.paymentMode;
     let coupon = req?.body?.couponId;
     let discountAmount=req?.body?.discountAmount
-
+    
+    req.session.order={
+      user:userId,
+      items:orderProducts,
+      totalAmount:grandTotal,
+      paymentMode:paymentMode,
+      address:address,
+      coupon:coupon,
+      discountAmount:discountAmount,
+      cart:cart
+    }
+    
     const order = await orderModal.create({
       user: userId,
       items: orderProducts,
@@ -78,6 +89,26 @@ const placeOrder = async (req, res, next) => {
       coupon: coupon,
       discountAmount:discountAmount
     });
+
+
+    if (paymentMode === "ONLINE") {
+      const razorpay_order = await razorpay.orders.create({
+        amount: order.totalAmount * 100,
+        currency: "INR",
+        receipt: order._id.toString(),
+      });
+      order.paymentData = razorpay_order;
+      await order.save();
+
+      // await couponModal.updateOne(
+      //   { _id: coupon },
+      //   { $inc: { maxRedemptions: -1 } }
+      // );
+      // await cartModal.deleteOne({ user: req.session.user._id });
+      return res
+        .status(200)
+        .json({ success: true, url: `/razor-pay?oid=${order._id}` });
+    }
 
     let errorMessages = [];
 
@@ -118,24 +149,7 @@ const placeOrder = async (req, res, next) => {
       return res.status(400).json({ errors: errorMessages });
     }
 
-    if (paymentMode === "ONLINE") {
-      const razorpay_order = await razorpay.orders.create({
-        amount: order.totalAmount * 100,
-        currency: "INR",
-        receipt: order._id.toString(),
-      });
-      order.paymentData = razorpay_order;
-      await order.save();
 
-      await couponModal.updateOne(
-        { _id: coupon },
-        { $inc: { maxRedemptions: -1 } }
-      );
-      await cartModal.deleteOne({ user: req.session.user._id });
-      return res
-        .status(200)
-        .json({ success: true, url: `/razor-pay?oid=${order._id}` });
-    }
 
     if (paymentMode === "WALLET") {
       const wallet = await walletModal.updateOne(
@@ -563,9 +577,18 @@ const downloadInvoice = async (req, res, next) => {
     res.download(file)
 };
 
+const deleteOrder=async (req,res,next)=>{
+  orderId=req.session.orderId;
+  let cart=req.session.order.cart
+  const updateProduct=await updateProducts(cart)
+  findOrder=await orderModal.findById(orderId);
+  delete req.session.order
+  res.status(204).json({response:true})
+}
+
 
 module.exports = {
-  placeOrder,
+  placeOrder,deleteOrder,
   getOrderProducts,
   orderPage,
   viewOrders,

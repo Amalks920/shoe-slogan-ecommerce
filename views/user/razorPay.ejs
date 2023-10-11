@@ -90,21 +90,62 @@
                         console.log("Error:", error)
                         status.textContent = "Oops! Looks like there is a problem with your payment"
                     })
+
+
             },
             "prefill": {
                 
             },
             "theme": {
                 "color": "#4D4DFF",
-            }
+            },
+            "modal.ondismiss":function () {
+                   deleteOrder()
+                      }
+
         };
 
         const rzp1 = new Razorpay(options);
         rzp1.on('payment.failed', function (response) {
+           
             status.textContent = response.error.description
-        });
+        });    
+    rzp1.on('payment.modal.closed', function () {
+  // This code will run when the Razorpay modal is closed
+  console.log('Razorpay modal was closed');
+  // You can add your custom logic here
+});
+
         rzp1.open();
+
+
+
     })
 
+ 
+async function deleteOrder(){
+    try {
+  const response = await fetch('/delete-order', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      // You can include other headers if needed, such as authentication tokens
+    },
+    
+    body: JSON.stringify({ someData: 'data' }),
+  });
+
+  if (!response.ok) {
+    // Handle non-2xx HTTP response status codes (e.g., 404 Not Found, 500 Internal Server Error)
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  window.location.href='/checkout'
+} catch (error) {
+  // Handle any errors that occurred during the fetch operation
+  console.error('Error:', error.message);
+}
+
+}
 
 </script>

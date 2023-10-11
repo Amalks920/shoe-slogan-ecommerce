@@ -1,5 +1,7 @@
+const { updateProducts } = require('../helper/orderHelper');
 const cartModal = require('../model/cartModal');
 const categoryModal=require('../model/categoryModal');
+const couponModal = require('../model/couponModal');
 const orderModal = require('../model/orderModal');
 const crypto=require('crypto');
 
@@ -22,7 +24,8 @@ const getPaymentPage=async (req, res) => {
   const checkPayment= async (req, res) => {
     const userId = req.session.user._id;
     const { razorpayOrderId, razorpayPaymentId, secret } = req.body;
-
+    let cart =req.session.order.cart;
+    let coupon=req.session.order.coupon
   
     const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_API_SECRET);
     hmac.update(razorpayOrderId + "|" + razorpayPaymentId);
@@ -33,6 +36,13 @@ const getPaymentPage=async (req, res) => {
         { orderStatus: "placed" }
       );
       
+
+      //await cartModal.deleteOne({ user: req.session.user._id });
+        await updateProducts(cart)
+              await couponModal.updateOne(
+        { _id: coupon },
+        { $inc: { maxRedemptions: -1 } }
+      );
       await cartModal.deleteOne({ user: req.session.user._id });
       res.status(200).json({ success: true });
     } else res.status(400).json({ success: false });

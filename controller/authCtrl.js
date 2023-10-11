@@ -368,11 +368,12 @@ const adminForgotPasswordPost=async(req,res,next)=>{
   try {
     const {email}=req.body
     const user=await userSchema.findOne({email:email})
+    console.log(user)
     if(user && user.role==='admin'){
-
+      
       res.redirect(
         url.format({
-          pathname: "/admin/change-password",
+          pathname: "/admin/verify-otp-f",
           query: {
             email: `${email}`,
           },
@@ -396,9 +397,11 @@ const adminForgotPasswordPost=async(req,res,next)=>{
 
 const getAdminChangePassword=async (req,res,next)=>{
 
-  if(req?.session?.admin){
-    return res.redirect('/admin-home')
+  if(req?.session?.admin || !req.session.userAuthDetails){
+    return res.redirect('/admin/admin-home')
   }
+
+  
 
   console.log(req.query.email)
   try {
@@ -410,6 +413,7 @@ const getAdminChangePassword=async (req,res,next)=>{
 
 const adminChangePasswordPost=async (req,res,next)=>{
   const {oldPassword,newPassword,email}=req.body
+    console.log(newPassword,email)
    try {
      const findUser=await User.findOne({email:email})
        findUser.password=newPassword;
@@ -417,6 +421,7 @@ const adminChangePasswordPost=async (req,res,next)=>{
        res.redirect('/admin/admin-login')
   
    } catch (error) {
+    console.log(error)
     res.redirect('/404')
    }
  }
@@ -700,6 +705,46 @@ const getAdminVerifyOtpLogin = async (req, res, next) => {
   }
 };
 
+const getAdminVerifyOtpLoginF = async (req, res, next) => {
+  if(req.session.userAuthDetails){
+    return res.redirect('/admin/admin-login')
+  }
+  let email=req.query.email;
+
+  if (req.session.admin) {
+    console.log(req.session.admin)
+    return res.redirect("/admin/admin-home");
+  }
+    const details=await sendOtp(email)
+    req.session.userAuthDetails=details
+  try {
+    res.render("admin/verifyOtpF", {
+      layout: "./layout/adminLoginLayout.ejs",
+      req: req,
+    });
+  } catch (error) {
+    res.redirect('/404')
+  }
+};
+
+const adminVerifyOtpLoginFp=async(req,res,next) => {
+  try {
+    let otpSession=req?.session?.userAuthDetails?.otp;
+    let email=req?.session.userAuthDetails?.email
+    let userOtp=req.body.otp
+    if(otpSession===userOtp){
+      res.redirect(`/admin/change-password?email=${email}`)
+    }else{
+      console.log('err')
+    }
+
+
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const verifyOtpAdminPost = async (req, res, next) => {
   try {
     if (req.body.otp === req.session.otp) {
@@ -793,7 +838,7 @@ module.exports = {
   adminOtpLoginPost,
   userLogin,changePassword,
   getAdminVerifyOtpLogin,
-  getHomePage,
+  getHomePage,adminVerifyOtpLoginFp,
   getHomePageNotLoggedIn,
   getAdminHome,
   verifyOtpAdminPost,
@@ -803,7 +848,7 @@ module.exports = {
   otpLoginPost,
   getVerifyOtp,
   verifyOtpPost,
-  changePasswordPost,
+  changePasswordPost,getAdminVerifyOtpLoginF,
   getAdminForgotPassword,adminForgotPasswordPost,
   getAdminChangePassword,adminChangePasswordPost,
   get404Err

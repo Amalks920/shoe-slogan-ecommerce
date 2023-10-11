@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../config/multer");
 const { getAdminHome, adminLogin, getAdminLogin, adminLogout, getAdminOtpLogin, 
-    adminOtpLoginPost, getAdminVerifyOtpLogin, verifyOtpAdminPost,getAdminForgotPassword, adminForgotPasswordPost, getAdminChangePassword, adminChangePasswordPost } = require('../controller/authCtrl')
+    adminOtpLoginPost, getAdminVerifyOtpLogin, verifyOtpAdminPost,getAdminForgotPassword, adminForgotPasswordPost, getAdminChangePassword, adminChangePasswordPost, getAdminVerifyOtpLoginF, adminVerifyOtpLoginFp } = require('../controller/authCtrl')
 const { adminAuthorizationMiddleware } = require('../middlewares/authorizationMiddleware')
 const { addCoupon, addCouponPost, viewCouponAdmin, getEditCoupon, editCoupon, deleteCoupon } = require('../controller/couponCtrl');
 const { setCacheControl } = require('../middlewares/cacheControllMiddleware');
@@ -29,7 +29,8 @@ router.post('/forgot-password',setCacheControl,adminForgotPasswordPost)
 router.get('/change-password',setCacheControl,getAdminChangePassword)
 router.post('/change-password',setCacheControl,adminChangePasswordPost)
 router.get('/admin-home', setCacheControl, adminAuthorizationMiddleware, getAdminHome)
-
+router.get('/verify-otp-f',setCacheControl,getAdminVerifyOtpLoginF)
+router.post('/verify-otp-fp',setCacheControl,adminVerifyOtpLoginFp)
 
 router.get('/add-category', setCacheControl, adminAuthorizationMiddleware, addCategory)
 router.post('/add-category', setCacheControl, upload.array("images", 10), adminAuthorizationMiddleware, addCategoryPost)

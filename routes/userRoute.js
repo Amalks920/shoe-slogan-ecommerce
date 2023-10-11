@@ -62,6 +62,7 @@ const {
   viewDeliveredProducts,
   returnProduct,
   downloadInvoice,
+  deleteOrder,
 } = require("../controller/orderCtrl");
 const {
   getPaymentPage,
@@ -69,6 +70,7 @@ const {
   payment,
 } = require("../controller/paymentCtrl");
 const { showOfferProducts } = require("../controller/offerCtrl");
+const { deleteOne } = require("../model/addressModal");
 
 router.get("/", setCacheControl, getHomePageNotLoggedIn);
 
@@ -173,6 +175,13 @@ router.post(
   authorizationMiddleware,
   placeOrder
 );
+
+router.delete(
+  '/delete-order',
+  setCacheControl,
+  authorizationMiddleware,
+  deleteOrder
+)
 
 router.get("/order-page", setCacheControl, authorizationMiddleware, orderPage);
 

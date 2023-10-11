@@ -2,6 +2,7 @@ var easyinvoice = require('easyinvoice');
 const fs=require('fs')
 const puppeteer = require("puppeteer");
 const orderModal = require('../model/orderModal');
+const productModal = require('../model/productModal');
 
 const createInvoice=()=>{
     console.log('osdifj')
@@ -288,8 +289,50 @@ const orderPagingation=(page,itemsPerPage)=>{
     })
 }
 
+const updateProducts= (cart)=>{
+    return new Promise(async(resolve,reject)=>{
+        try {
+            
+            const updatedProducts = await Promise.all(
+                cart[0]?.items?.map(async ({ productId, quantity }) => {
+                  const product = await productModal.findById(productId);
+          
+                  if (!product) {
+                    errorMessages.push({ productId, message: "Product not found" });
+                    return null; 
+                  }
+          
+                  if (product.stock <= 0 || product.stock < quantity) {
+                    errorMessages.push({ productId, message: "Insufficient stock" });
+                    return null;
+                  }
+          
+                  if (!product) {
+                    return { productId, message: "Product not found" };
+                  }
+          
+                  const updatedProduct = await productModal.findByIdAndUpdate(
+                    productId,
+                    {
+                      $inc: { stock: -quantity }, 
+                    },
+                    { new: true } 
+                  );
+          
+                  return product;
+                })
+                
+              ); 
+              resolve(updatedProducts)
+        } catch (error) {
+            reject(error)
+        }
+    })
+
+}
+
 
 module.exports={
     createInvoice,downloadInvoicePdf,
-    orderPagingation
+    orderPagingation,updateProducts
 }

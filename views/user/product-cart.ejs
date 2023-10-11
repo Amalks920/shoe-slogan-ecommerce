@@ -1,3 +1,14 @@
+<div id="modalbgc" style="border: 2px solid red; position: absolute;width: 100vw;z-index: 5;background-color: black;opacity:0.2 ;display: none;height: 100%; ">
+
+</div>
+
+<div id="delete-modalc" style="background-color: white;opacity: 1; width: 800px;height: 400px;margin-top: 250px;margin-left: 650px;position: fixed;z-index: 6;display: none;">
+  <h2 style="text-align: center;margin-top: 50px;">Do You Want to Delete Product From Cart??</h2>
+  <span style="display: flex;justify-content: center;gap: 15px;margin-top: 100px;">
+    <button id="deletebtnc" style="width: 100px;height: 40px;background-color: red;color: white;">Delete</button>
+    <button id="cancelbtnc" style="width: 100px;height: 40px;background-color: blue;color: white;">Cancel</button>
+  </span>
+</div>
 
 
 <% if(cart?.products?.length!=0 && cart){ %>
@@ -360,10 +371,10 @@
 
 
 
-  const modalBg = document.querySelector("#modalbg");
-  const deleteModal = document.querySelector("#delete-modal");
-  const deleteModalBtn = document.querySelector("#deletebtn");
-  const cancelModalBtn = document.querySelector("#cancelbtn");
+  const modalBg = document.querySelector("#modalbgc");
+  const deleteModal = document.querySelector("#delete-modalc");
+  const deleteModalBtn = document.querySelector("#deletebtnc");
+  const cancelModalBtn = document.querySelector("#cancelbtnc");
   const deleteCartProdBtns = document.querySelectorAll("#delete-cart-prod");
   let productId; // Define productId outside the loop
 

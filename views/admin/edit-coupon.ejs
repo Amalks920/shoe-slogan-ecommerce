@@ -109,7 +109,7 @@
                         placeholder="max redemptions"
                         name="expirationDate"
                         value="<%=data.expirationDate.toISOString().substr(0, 10) %>"
-                        id="expirationDateEdit"
+                        id="expirationDate"
                         type="datetime-local"
                         class="form-control" />
                     </div>
@@ -129,13 +129,7 @@
   </section>
  
 
-  <script>
-    const yesterdayEdit=new Date();
-  yesterdayEdit.setDate(yesterdayEdit.getDate());
-  
-  const formatedYesterDayEdit=yesterdayEdit.toISOString().slice(0,16);
-  document.getElementById('expirationDateEdit').setAttribute('min',formatedYesterDayEdit)
-  </script>
+
 
   <script src="/javascript/addCouponValidations.js">
 
