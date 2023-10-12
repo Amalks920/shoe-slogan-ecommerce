@@ -7,7 +7,7 @@ const Razorpay = require("razorpay");
 const walletModal = require("../model/walletModal");
 const couponModal = require("../model/couponModal");
 const { findReturnedPrdoucts } = require("../helper/productsHelper");
-const { createInvoice, downloadInvoicePdf, orderPagingation, updateProducts } = require("../helper/orderHelper");
+const { createInvoice, downloadInvoicePdf, orderPagingation, updateProducts, downloadInvoiceW } = require("../helper/orderHelper");
 const easyinvoice=require('easyinvoice')
 const fs=require('fs')
 const { Readable } = require("stream");
@@ -99,7 +99,7 @@ const placeOrder = async (req, res, next) => {
       });
       order.paymentData = razorpay_order;
       await order.save();
-
+      req.session.order=order
       // await couponModal.updateOne(
       //   { _id: coupon },
       //   { $inc: { maxRedemptions: -1 } }
@@ -573,15 +573,17 @@ const returnedProducts=async(req,res,next)=>{
 
 const downloadInvoice = async (req, res, next) => {
     const order=req.session.order;
-    const file=await downloadInvoicePdf(order)
+    const file=await downloadInvoiceW(order)
     res.download(file)
 };
 
 const deleteOrder=async (req,res,next)=>{
-  orderId=req.session.orderId;
+  orderId=req.session.order._id;
+  console.log(orderId)
+  
   let cart=req.session.order.cart
-  const updateProduct=await updateProducts(cart)
-  findOrder=await orderModal.findById(orderId);
+ // const updateProduct=await updateProducts(cart)
+  const deletionResult = await orderModal.deleteOne({ _id: orderId });
   delete req.session.order
   res.status(204).json({response:true})
 }

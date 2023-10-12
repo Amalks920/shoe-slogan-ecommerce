@@ -104,7 +104,7 @@ const downloadReports= async (req, res, next) => {
             'user'
           )
           const netTotalAmount = orders.reduce((acc, order) => acc + order.totalAmount, 0)
-          const netFinalAmount = orders.reduce((acc, order) => acc + order.finalPrice, 0)
+         // const netFinalAmount = orders.reduce((acc, order) => acc + order.finalPrice, 0)
           const netDiscount = orders.reduce((acc, order) => acc + order.discountAmount, 0)
     
           if (type === 'excel') {
@@ -134,7 +134,7 @@ const downloadReports= async (req, res, next) => {
             worksheet.getRow(3).alignment = { horizontal: 'right' }
             worksheet.getRow(4).values = ['', 'To', to.split('T')[0]]
             worksheet.getRow(5).values = ['', 'Total Orders', orders.length]
-            worksheet.getRow(6).values = ['', 'Net Final Price', netFinalAmount]
+          //  worksheet.getRow(6).values = ['', 'Net Final Price', netFinalAmount]
     
             worksheet.getRow(7).values = []
             worksheet.getRow(8).values = []
@@ -157,7 +157,7 @@ const downloadReports= async (req, res, next) => {
     
             worksheet.addRow(['', '', '', '', '', '', 'Net Total Price', netTotalAmount, ''])
             worksheet.addRow(['', '', '', '', '', '', 'Net Discount Price', netDiscount, ''])
-            worksheet.addRow(['', '', '', '', '', '', 'Net Final Price', netFinalAmount, ''])
+           // worksheet.addRow(['', '', '', '', '', '', 'Net Final Price', netFinalAmount, ''])
             worksheet.lastRow.eachCell((cell) => {
               cell.font = { bold: true }
             })

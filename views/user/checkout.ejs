@@ -649,7 +649,8 @@ if(couponData?.couponcode===couponCode?.textContent){
   
 
    if(couponData?.discountType==="Fixed")priceAfterCpn=totalAmount-couponData?.discountAmount
-   else priceAfterCpn=(Number(couponData?.discountAmount)/100)*totalAmount;
+   else priceAfterCpn=totalAmount-(Number(couponData?.discountAmount)/100)*totalAmount;
+   console.log(priceAfterCpn,totalAmount)
   priceAfterCoupon.textContent=priceAfterCpn
   totalAmountAfterCoupon=priceAfterCoupon.textContent
   

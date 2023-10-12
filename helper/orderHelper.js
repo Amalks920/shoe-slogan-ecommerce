@@ -3,6 +3,8 @@ const fs=require('fs')
 const puppeteer = require("puppeteer");
 const orderModal = require('../model/orderModal');
 const productModal = require('../model/productModal');
+const excel=require('exceljs')
+
 
 const createInvoice=()=>{
     console.log('osdifj')
@@ -277,6 +279,73 @@ const downloadInvoicePdf=(order)=>{
 
 }
 
+const downloadInvoiceW = async (order) => {
+    return new Promise(async (resolve, reject) => {
+      const excel = require('exceljs'); // You need to import the exceljs library
+  
+      const workbook = new excel.Workbook();
+      const worksheet = workbook.addWorksheet('Invoice');
+        console.log(order)
+      worksheet.columns = [
+        { header: 'SL. No', key: 's_no', width: 10 },
+        { header: 'Product Name', key: 'p_name', width: 20 },
+        { header: 'Price', key: 'price', width: 20 },
+        { header: 'Quantity', key: 'qty', width: 20 },
+        { header: 'Total Price', key: 'totalAmount', width: 20 },
+
+      ];
+      
+      // Assuming 'order' is an object representing a single order
+      const orderItems = order.items;
+  
+      let count = 1;
+      
+      orderItems.forEach((item, index) => {
+        worksheet.addRow({
+          s_no: count++,
+          p_name: item.productId.productname, // You should use the correct field name
+          price: item.productId.price, // You should use the correct field name
+          qty: item.quantity,
+          totalAmount: item.quantity * item.price,
+      
+        });
+      });
+  
+      // Calculate total values here and replace placeholders accordingly
+  
+      worksheet.addRow([]); // Add empty row
+  
+      // Calculate and set total values here
+      const netTotalAmount =order.totalAmount
+      const netDiscount =order.discountAmount
+  
+      worksheet.addRow(['', '', '', '', '', '', 'Net Total Price', netTotalAmount]);
+      worksheet.addRow(['', '', '', '', '', '', 'Net Discount Price', netDiscount]);
+  
+      try {
+        const fileName = `invoice_${order._id}.xlsx`; // Use the order ID to create a unique filename
+        await workbook.xlsx.writeFile(fileName);
+        resolve(fileName);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+  
+  // Define functions to calculate the total values
+  function calculateNetTotalAmount(items) {
+    return 1
+  }
+  
+  function calculateNetDiscount(items) {
+    return 2
+  }
+  
+  function calculateNetFinalAmount(items) {
+    return 3
+  }
+  
+
 const orderPagingation=(page,itemsPerPage)=>{
     return new Promise(async(resolve,reject)=>{
         try {
@@ -334,5 +403,6 @@ const updateProducts= (cart)=>{
 
 module.exports={
     createInvoice,downloadInvoicePdf,
-    orderPagingation,updateProducts
+    orderPagingation,updateProducts,
+    downloadInvoiceW
 }
