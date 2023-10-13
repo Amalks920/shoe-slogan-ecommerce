@@ -7,7 +7,7 @@ const Razorpay = require("razorpay");
 const walletModal = require("../model/walletModal");
 const couponModal = require("../model/couponModal");
 const { findReturnedPrdoucts } = require("../helper/productsHelper");
-const { createInvoice, downloadInvoicePdf, orderPagingation, updateProducts, downloadInvoiceW } = require("../helper/orderHelper");
+const { createInvoice, downloadInvoicePdf, orderPagingation, updateProducts, downloadInvoiceW, statusWiseOrderCount } = require("../helper/orderHelper");
 const easyinvoice=require('easyinvoice')
 const fs=require('fs')
 const { Readable } = require("stream");
@@ -253,21 +253,25 @@ const orderDetails = async (req, res, next) => {
 
 const getOrderProducts = async (req, res, next) => {
   try {
-    let page=req.query.page;
-    let itemsPerPage=9;
-    const NO_OF_BTNS=await orderPagingation(page,itemsPerPage)
+   // let page=req.query.page;
+   // let itemsPerPage=9;
+    //const NO_OF_BTNS=await orderPagingation(page,itemsPerPage)
     const order = await orderModal
       .findById(req.params.id)
       .populate("items.productId")
       .populate("user")
       .populate("address");
-    console.log(order);
+    
+      const inputDate=order.createdAt
+      const formattedDate = moment(inputDate).format("YYYY-MM-DD HH:mm:ss");
+
     res.render("admin/order-product", {
       layout: "./layout/adminLayout.ejs",
       isLoggedIn: true,
       order: order,
       req: req,
-      NO_OF_BTNS
+     // NO_OF_BTNS,
+      formattedDate
     });
   } catch (error) {
     res.redirect('/404')
@@ -588,11 +592,31 @@ const deleteOrder=async (req,res,next)=>{
   res.status(204).json({response:true})
 }
 
+const getOrderCount=async (req,res,next)=>{
+  try {
+     const orderCount=await  statusWiseOrderCount()
+     let statusArray=orderCount.map((el,index)=>{
+      return el._id
+     })
+     let countArray=orderCount.map((el,index)=>{
+      return el.totalCount
+     })
+     let response={
+      statusArray,countArray
+     }
+     res.status(200).json({response:response})
+
+     
+  } catch (error) {
+    res.redirect('/404')
+  }
+}
+
 
 module.exports = {
   placeOrder,deleteOrder,
   getOrderProducts,
-  orderPage,
+  orderPage,getOrderCount,
   viewOrders,
   editOrder,
   orderDetails,

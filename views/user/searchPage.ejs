@@ -269,7 +269,7 @@
 															</ul>
 														</div>
 														<div class="shoe single-item hvr-outline-out">
-															<form action="#" method="post">
+															<form action="/product-page/<%=items._id %>" method="GET">
 																<input type="hidden" name="cmd" value="_cart">
 																<input type="hidden" name="add" value="1">
 																<input type="hidden" name="shoe_item"
@@ -301,7 +301,7 @@
 							</div>
 
 
-							<ul class="pagination justify-content-start">
+							<ul class="pagination justify-content-start" >
 
 						
 									<% for(var i=0;i<NO_OF_PAGES;i++){ %>
@@ -314,7 +314,7 @@
 							</ul>
 
 						
-							<div class="col-md-6 shop_left shp">
+							<div class="col-md-6 shop_left shp" style="margin-top: 100px;">
 								<img src="/images/banner4.jpg" alt="">
 								<h6>21% off</h6>
 							</div>

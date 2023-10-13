@@ -4,7 +4,8 @@
 		<div class="card mx-auto card-login" style="margin-top: 100px;">
 			<div class="card-body" style="background-color: rgb(196, 193, 193);">
 				<h4 class="card-title mb-4">Enter OTP</h4>
-				<form id="loginform" action="/admin/verify-otp-fp" method="post">
+				<input type="text" name="email" value="<%=req.query.email %>" id="email" hidden>
+				<form id="otpform">
                     <p id="otpErr" style="color: red;"><%=req.query.err-%></p>
 					<div class="mb-3">
 						<input id="otp" class="form-control"  name="otp" placeholder="otp" type="number">
@@ -18,3 +19,66 @@
 		</div>
 	</section>
 </main>
+
+<script>
+	const form=document.querySelector('#otpform');
+	const otpErr=document.querySelector('#otpErr')
+	const email=document.querySelector('#email')
+	form.addEventListener('submit', function (event) {
+		event.preventDefault()
+		const formData=new FormData(form)
+		const otp=formData.get('otp')
+		console.log(otp)
+		if(!validateOtp(otp)){
+			
+			otpErr.textContent="otp should be 6 digits"
+			event.preventDefault()
+			return;
+		}
+
+		sendOtp()
+		
+	})
+
+
+	async function sendOtp(){
+try {
+  const formData=new FormData(form)
+  const otp=formData.get('otp')
+  
+  console.log(otp)
+  const body = JSON.stringify({otp});
+  const headers ={'Content-Type': 'application/json'} // You can adjust the content type as needed
+    // Add any other headers you require
+
+const response = await fetch("/admin/verify-otp-fp", {
+  method: 'POST',
+  headers: headers,
+  body: body
+});
+
+if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+	return 
+  }
+  
+const data=await response.json()
+
+if(data.err){
+	otpErr.textContent=data.err;
+}else{
+	window.location.href=`/admin/change-password?email=${email.value}`
+}
+
+} catch (error) {
+  console.log(error)
+}
+}
+
+  
+
+	function validateOtp(value){
+	let otpRegExp=/^\d{6}$/
+	return otpRegExp.test(value)
+	}
+</script>

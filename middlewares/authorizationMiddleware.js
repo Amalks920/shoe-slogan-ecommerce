@@ -4,7 +4,9 @@ const authorizationMiddleware = async (req, res, next) => {
   
   let user;
   try {
-    if(!req.session.user) return res.redirect("/loginOrSignup");
+    if(!req.session.user){
+      return res.redirect("/loginOrSignup"); 
+    } 
 
     user = await userSchema.findById(req?.session?.user?._id);
     if (user && user?.isBlocked){

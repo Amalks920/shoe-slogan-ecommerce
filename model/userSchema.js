@@ -14,6 +14,7 @@ var userSchema = new mongoose.Schema({
         minLength: 3,
         maxLength: 50,
         pattern: /^[a-zA-Z ]+$/,
+        lowercase:true,
         message: 'Name must be at least 3 characters long and contain only letters and spaces',
     },
    
@@ -22,6 +23,7 @@ var userSchema = new mongoose.Schema({
         type:String,
         required:true,
         unique:true,
+        lowercase:true,
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}$/,
         message: 'Invalid email address',
     },

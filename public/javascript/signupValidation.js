@@ -5,6 +5,7 @@ const emailErr=document.getElementById('emailErr')
 const passwordInput = document.getElementById("signupPassword")
 const rePasswordInput = document.getElementById("signupRePassword")
 const passwordError = document.getElementById("passwordErr")
+const signupForm=document.getElementById('signupForm')
 
 
 
@@ -30,7 +31,7 @@ function validateEmail(email) {
   }
 
 const handleSignUpSubmit=(event)=>{
-
+    event.preventDefault()
     if(usernameElement.value===""){
     document.getElementById('usernameErr').textContent="Username Should not be blank"
     event.preventDefault()
@@ -38,7 +39,7 @@ const handleSignUpSubmit=(event)=>{
 
  
     if(!validateuserName(usernameElement.value)){
-        console.log('hlekj')
+  
         document.getElementById('usernameErr').textContent='Username is invalid'
         event.preventDefault()
     }
@@ -88,13 +89,48 @@ const handleSignUpSubmit=(event)=>{
       }
     
 
-    
+    			// Create a FormData object to collect form data
+			const formData = new FormData(signupForm);
+			const username = formData.get("username");
+       		const email = formData.get("email");
+        	const password = formData.getAll("password");
+			let data={
+				username:username,
+				email:email,
+				password:password
+			}
+			fetch("/user-signup", {
+				method: "POST",
+				headers: {
+                "Content-Type": "application/json",
+           				 },
+				body:JSON.stringify(data),
+			})
+				.then((response) =>  response.json())
+				.then((data) => {
+					// Handle the response from the server
+					console.log(data)
+					if (data.success) {
+						
+						window.location.href = "/loginOrSignup";
+						
+					} else {
+            console.log(data)
+						// Handle error, display error messages, etc.
+						document.getElementById("usernameErr").textContent = data.usernameError;
+						document.getElementById("emailErr").textContent = data.message;
+						document.getElementById("passwordErr").textContent = data.passwordError;
+					}
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+				});
   
     
 
 }
 
-const signupForm=document.getElementById('signupForm')
+
 
 
 signupForm.addEventListener('submit',handleSignUpSubmit)

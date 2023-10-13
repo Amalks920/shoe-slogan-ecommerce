@@ -332,18 +332,7 @@ const downloadInvoiceW = async (order) => {
     });
   };
   
-  // Define functions to calculate the total values
-  function calculateNetTotalAmount(items) {
-    return 1
-  }
-  
-  function calculateNetDiscount(items) {
-    return 2
-  }
-  
-  function calculateNetFinalAmount(items) {
-    return 3
-  }
+
   
 
 const orderPagingation=(page,itemsPerPage)=>{
@@ -400,9 +389,28 @@ const updateProducts= (cart)=>{
 
 }
 
+const  statusWiseOrderCount=()=>{
+    return new Promise(async(resolve,reject)=>{
+        try {
+        const orderCounts=await orderModal.aggregate([
+            {
+                $group:{
+                    _id:'$orderStatus',
+                    totalCount:{$sum:1}
+                }
+            }
+        ])
+        resolve(orderCounts)
+        console.log(orderCounts)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports={
     createInvoice,downloadInvoicePdf,
     orderPagingation,updateProducts,
-    downloadInvoiceW
+    downloadInvoiceW,statusWiseOrderCount
 }

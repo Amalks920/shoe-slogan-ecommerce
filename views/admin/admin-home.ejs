@@ -266,7 +266,11 @@
 
     </div>
 
-    <div class="card mb-4" >
+    <div style="width: 50%;height:fit-content;margin-left: 400px;background-color: white;padding: 100px;">
+        <canvas id="myPiChart" height="217"></canvas> 
+    </div>
+
+    <div class="card mb-4"  style="display: none;">
         <header class="card-header">
             <h4 class="card-title">Latest orders</h4>
             <div class="row align-items-center">
@@ -485,7 +489,7 @@
             </div> <!-- table-responsive end// -->
         </div>
     </div>
-    <div class="pagination-area mt-30 mb-50">
+    <div class="pagination-area mt-30 mb-50" style="display: none;">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
                 <li class="page-item active"><a class="page-link" href="#">01</a></li>
@@ -578,7 +582,6 @@
 <script>
     const ctlx2=document.getElementById('myBarChart').getContext('2d')
     async  function fetchCateogryWiseSales () {
-        console.log('hiiiiii')
         const response=await  fetch('/admin/categorywise-sales')
         const data=await response.json();
         let catArray=data.response.catArray;
@@ -601,4 +604,42 @@
     }
 
 fetchCateogryWiseSales();
+</script>
+
+<script>
+    const piChart=document.querySelector('#myPiChart')
+    async  function fetchOrderCount () {
+        const response=await  fetch('/admin/get-status-wise-order-count')
+        const data=await response.json();
+        const statusArray=data.response.statusArray;
+        const countArray=data.response.countArray;
+        let chart= new Chart(piChart,{
+        type:'doughnut',
+        data:{
+            labels:statusArray,
+            datasets:[
+                {
+                    labels:[
+                        'Red',
+                        'Yellow',
+                        'Blue'
+                    ],
+                    data:countArray,
+                    backgroundColor: [
+      'rgb(255, 99, 132)',
+      'rgb(54, 162, 235)',
+      'rgb(144, 238, 144)',
+      'rgb(255, 205, 86)'
+    ],
+                },
+                
+            ]
+        },
+        options:{}
+    })
+
+
+    }
+
+fetchOrderCount();
 </script>

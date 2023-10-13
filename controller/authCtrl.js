@@ -16,9 +16,15 @@ const { sendOtp } = require("../helper/authHelper");
 
 const createUser = expressAsycnHandler(async (req, res) => {
   console.log(req.body);
-  const { name, email, phone, password } = req.body;
+  console.log('req.body')
 
-  let findUser = await userSchema.findOne({ email: email });
+  const { name, email, password } = req.body;
+  let findUser
+try {
+   findUser = await userSchema.findOne({ email: email });
+} catch (error) {
+  res.redirect('/404')
+}
 
   if (!findUser) {
     try {
@@ -35,16 +41,19 @@ const createUser = expressAsycnHandler(async (req, res) => {
         return res.status(401).json({ err: "something missing" });
 
       await walletModal.create({user_id:user?._id})
-      res.redirect("/loginOrSignup");
+      res.status(200).json({success:true})
     } catch (error) {
       res.redirect('/404')
     }
   } else {
-    
-    res.json({
-      message: "user already exists",
-      success: false,
-    });
+    console.log('hello')
+    return res.status(401).json({
+           message: "user already exists",
+       
+           });
+
+
+
   }
 });
 
@@ -52,6 +61,7 @@ const getUserLogin = expressAsycnHandler(async (req, res, next) => {
   if (req.session.user) {
     return res.redirect("/home");
   }
+
   res.render("user/loginSignup", { layout: "./layout/signupLogin", req: req });
 });
 
@@ -153,7 +163,9 @@ const adminLogin = expressAsycnHandler(async (req, res, next) => {
 
 const getAdminLogin = expressAsycnHandler(async (req, res, next) => {
   try {
+
     if (req.session.admin) return res.redirect("/admin/admin-home");
+    delete req?.session?.userAuthDetails
     res.render("admin/adminLogin", {
       layout: "./layout/adminLoginLayout",
       req: req,
@@ -541,7 +553,7 @@ const verifyOtpPostFg = async (req, res, next) => {
      console.log(req.body.otp)
       res.redirect("/change-password");
     } else {
-
+      req.err="Invalid otp"
      return  res.render('user/verifyOtpFg',{layout:'./layout/signupLogin.ejs',req:req})
       res.redirect(
         url.format({
@@ -729,13 +741,15 @@ const getAdminVerifyOtpLoginF = async (req, res, next) => {
 
 const adminVerifyOtpLoginFp=async(req,res,next) => {
   try {
+    console.log(req.body)
     let otpSession=req?.session?.userAuthDetails?.otp;
     let email=req?.session.userAuthDetails?.email
     let userOtp=req.body.otp
     if(otpSession===userOtp){
-      res.redirect(`/admin/change-password?email=${email}`)
+      res.json({msg:true})
+      //res.redirect(`/admin/change-password?email=${email}`)
     }else{
-      console.log('err')
+     res.json({err:'invalid-otp'})
     }
 
 

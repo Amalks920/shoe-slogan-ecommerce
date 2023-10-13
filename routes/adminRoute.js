@@ -9,7 +9,7 @@ const { setCacheControl } = require('../middlewares/cacheControllMiddleware');
 const { addCategory, addCategoryPost, viewCategory, deleteCategory } = require('../controller/categoryCtrl');
 const { getViewProducts, getEditProduct, editProductPost, deleteImage } = require("../controller/productCtrl");
 const { getViewUsers, blockUser } = require('../controller/userCtrl')
-const {viewOrdersAdmin,editOrder, getOrderProducts, cancelOrder, returnedProducts, downloadInvoice}=require('../controller/orderCtrl');
+const {viewOrdersAdmin,editOrder, getOrderProducts, cancelOrder, returnedProducts, downloadInvoice, getOrderCount}=require('../controller/orderCtrl');
 const { getBannerManagementPage, addBannerPost, getEditBanner, editBanner } = require("../controller/bannerCtrl");
 
 const {getAddOffers, viewOffers, addOffer, getEditOffers, editOffer, viewOfferProducts, removeOffer}=require('../controller/offerCtrl');
@@ -82,6 +82,7 @@ router.get('/sales-report',setCacheControl,adminAuthorizationMiddleware,salesRep
 router.get('/reports/sales/download/:type',setCacheControl,adminAuthorizationMiddleware,downloadReports);
 router.get("/monthly-report",setCacheControl,adminAuthorizationMiddleware, monthlyReport)
 router.get('/categorywise-sales',setCacheControl,adminAuthorizationMiddleware,categoryWiseSales)
+router.get('/get-status-wise-order-count',setCacheControl,getOrderCount)
 
 module.exports = router
 

@@ -1,5 +1,6 @@
 const couponModal = require("../model/couponModal")
 const {body, validationResult}=require('express-validator')
+const moment=require('moment')
 
 const getCoupon=async(req,res,next)=>{
     res.render('user/coupon',{layout:'./layout/userLayout'})
@@ -47,9 +48,19 @@ const addCouponPost=async(req, res,next) => {
 
 const viewCouponAdmin=async(req,res,next) => {
     try {
-        const coupon=await couponModal.find({})
-       res.render('admin/view-coupon',{layout:'./layout/adminLayout.ejs',data:coupon}) 
+       const coupon=await couponModal.find({})
+       let expiryDate=coupon.map((c,i)=>{
+            const inputDate=c.createdAt
+            const formattedDate = moment(inputDate).format("YYYY-MM-DD HH:mm:ss");
+            return  c.createdAt=formattedDate
+        })
+
+  
+       res.render('admin/view-coupon',
+       {layout:'./layout/adminLayout.ejs',
+       data:coupon,expiryDate}) 
     } catch (error) {
+        console.log(error)
         res.redirect('/404')
     }
 }
@@ -58,7 +69,8 @@ const getEditCoupon=async (req,res,next)=>{
     try {
         const coupon=await couponModal.findById(req.params.id);
 
-        res.render('admin/edit-coupon',{layout:'./layout/adminLayout.ejs',data:coupon}) 
+        res.render('admin/edit-coupon',{layout:'./layout/adminLayout.ejs',
+        data:coupon}) 
 
     } catch (error) {
         res.redirect('/404')

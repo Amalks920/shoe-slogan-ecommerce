@@ -30,7 +30,7 @@
                     <div class="col-lg-2 col-sm-2 col-4 col-status">
                         <h4>Discount Type</h4>
                     </div>
-                    <div class="col-lg-2 col-sm-2 col-4 col-status">
+                    <div class="col-lg-2 col-sm-2 col-4 col-status"style="margin-left:150px;">
                         <h4>Expiry</h4>
                     </div>
 
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                     <p><%=offer?.expirationDate %></p>
+                     <p><%=expiryDate[index] %></p>
                     </div>
                     <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
                         <a href="/admin/edit-offer/<%=offer?._id %>" data-id="<%=offer?._id %>" class="btn btn-sm font-sm rounded btn-brand">

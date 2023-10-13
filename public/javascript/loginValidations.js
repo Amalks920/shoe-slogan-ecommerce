@@ -21,7 +21,7 @@ function validateEmail(email) {
     // Get the email input value
     const emailInput = document.getElementById("typeEmailX");
     const email = emailInput.value;
-    console.log('hioasdij')
+    
     // Get the error element
     const emailError = document.getElementById("emailError");
   

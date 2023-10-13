@@ -27,7 +27,7 @@
 
                 </div> 
             </article>
-           <% data.forEach((coupon)=>{ %>
+           <% data.forEach((coupon,index)=>{ %>
 
           
             <article class="itemlist">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-2 col-4 col-price"> <span><%= coupon.description -%></span> </div>
                     <div class="col-lg-2 col-sm-2 col-4 col-status">
-                        <span><%= coupon.expirationDate -%></span>
+                        <span><%=expiryDate[index]-%></span>
                     </div>
 
                     <div class="col-lg-2 col-sm-2 col-4 col-action text-end">

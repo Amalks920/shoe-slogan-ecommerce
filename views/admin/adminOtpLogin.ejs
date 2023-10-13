@@ -34,7 +34,7 @@ function validateEmail(email) {
 
     const emailInput = document.getElementById("typeEmailX");
     const email = emailInput.value;
-    console.log('hioasdij')
+    
     const emailError = document.getElementById("emailError");
   
     console.log(email)
@@ -52,6 +52,7 @@ function validateEmail(email) {
 
       emailError.textContent = "Invalid email address!";
       event.preventDefault();
+      return;
 
     }
 

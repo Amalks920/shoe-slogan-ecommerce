@@ -100,23 +100,14 @@
             <% }) %>
             <div  style="padding-left: 100px;margin-top: 30px;margin-left: 1200px;">
                 <h4>Discount Amount : <%=order.discountAmount%></h4>
+                <h4>Ordered On : <%=formattedDate%></h4>
             </div>
 
        
           
         </div> 
     </div> 
-    <div class="pagination-area mt-30 mb-50">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-start">\
-                <% for(var i=0;i<NO_OF_BTNS;i++){ %>
-
-                
-                <li class="page-item active"><a class="page-link" href="/admin/order-products/<%=order._id%>?page=<%=i %>"><%=i+1 %></a></li>
-                <% } %>
-            </ul>
-        </nav>
-    </div>
+    
 </section>
 
 

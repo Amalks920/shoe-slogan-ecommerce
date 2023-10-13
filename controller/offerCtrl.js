@@ -2,6 +2,7 @@ const offerModal = require("../model/offerModal");
 const { validationResult } = require("express-validator");
 const validator = require("validator");
 const productModal = require("../model/productModal");
+const moment=require('moment')
 
 const getAddOffers = async (req, res, next) => {
   try {
@@ -29,10 +30,16 @@ const viewOffers = async (req, res, next) => {
     let pageNo = req?.query?.page;
     let pageinBtn = Math.floor((await offerModal.find({})).length / pageNo);
     const offers = await offerModal.find({}).limit(2).skip(2);
+    let expiryDate=offers.map((offer,i)=>{
+      const inputDate=offer.createdAt
+      const formattedDate = moment(inputDate).format("YYYY-MM-DD HH:mm:ss");
+      return  offer.createdAt=formattedDate
+  })
     res.render("admin/view-offers", {
       layout: "./layout/adminLayout.ejs",
       offers: offers,
       pageinBtn,
+      expiryDate
     });
   } catch (error) {
     res.redirect("/404");
