@@ -24,7 +24,10 @@ const getPaymentPage=async (req, res) => {
   const checkPayment= async (req, res) => {
     const userId = req.session.user._id;
     const { razorpayOrderId, razorpayPaymentId, secret } = req.body;
-    let cart =req.session.order.cart;
+    let cart =req.session.orderDetails.cart;
+    //   console.log(req.session.order)
+    // console.log(cart)
+    console.log('this ')
     let coupon=req.session.order.coupon
   
     const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_API_SECRET);

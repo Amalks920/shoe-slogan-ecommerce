@@ -120,6 +120,7 @@ const userLogin = expressAsycnHandler(async (req, res, next) => {
 
     }
   } catch (error) {
+    console.log(error)
     res.redirect('/404')
   }
 });

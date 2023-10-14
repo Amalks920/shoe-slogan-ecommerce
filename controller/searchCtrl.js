@@ -8,7 +8,6 @@ const searchPage = async (req, res, next) => {
   let PAGE = req?.query?.page;
   let from = req?.query?.from;
   let to = req?.query?.to;
-
   const category = await categoryModal.find({});
 
   const allProducts = await productModal.find({ status: { $ne: "Delisted" } });
@@ -16,6 +15,7 @@ const searchPage = async (req, res, next) => {
 
   try {
     let products;
+    categories
     if (categories === null || !categories || categories[0] === "") {
       products = await productModal.aggregate([
         {
@@ -74,7 +74,7 @@ const searchPage = async (req, res, next) => {
     }
 
     if (search) {
-      products = products.filter((product, index) => {
+      products = allProducts.filter((product, index) => {
         return product.productname.search(search) != -1;
       });
       NO_OF_PAGES = Math.ceil(products.length / 9);
@@ -90,12 +90,15 @@ const searchPage = async (req, res, next) => {
       products: req.session.filteredProducts,
       category,
       categories,
+      sort,
       isLoggedIn: true,
       searchInput: search,
       NO_OF_PAGES: NO_OF_PAGES,
       req,
+      from
     });
   } catch (error) {
+    console.log(error)
     res.redirect("/404");
   }
 };

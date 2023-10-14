@@ -197,7 +197,6 @@ router.get("/logout", authorizationMiddleware, logout);
 router.get(
   "/search-page",
   setCacheControl,
-  authorizationMiddleware,
   searchPage
 );
 

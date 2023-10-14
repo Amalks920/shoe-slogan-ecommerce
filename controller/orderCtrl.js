@@ -16,9 +16,10 @@ const moment=require('moment')
 
 const placeOrder = async (req, res, next) => {
   const userId = req.session.user._id;
-
+  console.log(userId)
   try {
     const cart = await cartModal.aggregate([
+
       {
         $unwind: "$products",
       },
@@ -55,7 +56,10 @@ const placeOrder = async (req, res, next) => {
       },
     ]);
 
-   
+   //const cart =await cartModal.findOne({user:userId})
+    
+
+   console.log(cart)
 
     let address = await addressModal.findOne({ user: userId });
     address=address.address.filter((address,index)=>{
@@ -64,12 +68,13 @@ const placeOrder = async (req, res, next) => {
     console.log(address)
 
     const orderProducts = cart[0].items;
+    console.log(orderProducts)
     let grandTotal = req.body.totalAmountAfterCoupon;
     let paymentMode = req.body.paymentMode;
     let coupon = req?.body?.couponId;
     let discountAmount=req?.body?.discountAmount
     
-    req.session.order={
+    req.session.orderDetails={
       user:userId,
       items:orderProducts,
       totalAmount:grandTotal,

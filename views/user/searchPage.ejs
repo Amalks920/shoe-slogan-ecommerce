@@ -29,22 +29,21 @@
 							<h3 class="agileits-sear-head" style="font-size: larger;">Category</h3>
 							<ul>
 								<li>
-									<input id="category-filter" type="checkbox" value="men" class="checked" <% if
-										(categories.includes('men')) { %> checked <% } %>>
+									<input id="category-filter" value="men" type="checkbox" <%if(categories[0]==="men"){%>checked<%}%>  >
 
 										<span class="span" style="color: black;font-size: larger;">Men</span>
 								</li>
 								<li>
-									<input id="category-filter" type="checkbox" value="women" class="checked" <% if
-										(categories.includes('women')) { %> checked <% } %>>
+									<input id="category-filter" type="checkbox" value="women" <%if(categories[0]==="women"){%>checked<%}%>
+									 >
 										<span class="span" style="color: black;font-size: larger;">Women</span>
 								</li>
 								<li>
-									<input id="category-filter" type="checkbox" value="kids" class="checked" <% if
-										(categories.includes('kids')) { %> checked <% } %>>
+									<input id="category-filter" type="checkbox" value="kids" <%if(categories[0]==="kids"){%>checked<%}%>
+									>
 										<span class="span" style="color: black;font-size: larger;">Kids</span>
 								</li>
-								<li><button id="filter">Filter</button></li>
+								<li><button id="filter" style="display: none;">Filter</button></li>
 							</ul>
 						</div>
 					
@@ -52,12 +51,13 @@
 							<h3 class="agileits-sear-head" style="font-size: larger;">Price Range</h3>
 							<ul>
 								<li>
-									<input id="low-to-high" type="radio" value="1" name="price-order" class="checked"
+									
+									<input id="low-to-high" value="1" name="price-order" class="checked" type="radio" <%if(sort==="lowtohigh"){%>checked<%}%> 
 										onchange="handleRadioChange(this)">
 									<label for="low-to-high" style="color: black;font-size: larger;" class="span">Low to High</label>
 								</li>
 								<li>
-									<input id="high-to-low" style="color: black;font-size: larger;" type="radio" value="2" name="price-order" class="checked"
+									<input id="high-to-low" style="color: black;font-size: larger;" type="radio" value="2" name="price-order" <%if(sort==="hightolow"){%>checked<%}%>
 										onchange="handleRadioChange(this)">
 									<label for="high-to-low" class="span" style="color: black;font-size: larger;">High to Low</label>
 								</li>
@@ -69,27 +69,27 @@
 							<ul>
 								<li>
 									<input id="low-to-high" type="radio" value="3" name="price-order" class="checked"
-										onchange="handleRadioChange(this)">
+										onchange="handleRadioChange(this)" <%if(from==0){%>checked<%}%> >
 									<label for="low-to-high" style="color: black;font-size: larger;" class="span">0 to 500</label>
 								</li>
 								<li>
 									<input id="high-to-low" type="radio" value="4" name="price-order" class="checked"
-										onchange="handleRadioChange(this)">
+										onchange="handleRadioChange(this)" <%if(from==500){%>checked<%}%>>
 									<label for="high-to-low" style="color: black;font-size: larger;" class="span">500 to 1000</label>
 								</li>
 								<li>
 									<input id="high-to-low" type="radio" value="5" name="price-order" class="checked"
-										onchange="handleRadioChange(this)">
+										onchange="handleRadioChange(this)" <%if(from==1000){%>checked<%}%>>
 									<label for="high-to-low" style="color: black;font-size: larger;" class="span">1000 to 1500</label>
 								</li>
 								<li>
 									<input id="high-to-low" type="radio" value="6" name="price-order" class="checked"
-										onchange="handleRadioChange(this)">
+										onchange="handleRadioChange(this)" <%if(from==1500){%>checked<%}%>>
 									<label for="high-to-low" style="color: black;font-size: larger;" class="span">1500 to 2000</label>
 								</li>
 								<li>
 									<input id="high-to-low" type="radio" value="7" name="price-order" class="checked"
-										onchange="handleRadioChange(this)">
+										onchange="handleRadioChange(this)" <%if(from==2000){%>checked<%}%>>
 									<label for="high-to-low" style="color: black;font-size: larger;" class="span">2000 to 2500</label>
 								</li>
 							</ul>
@@ -506,16 +506,17 @@
 
 				function handleRadioChange(input) {
 
-					const currentURL = window.location.href;
+					let currentURL = window.location.href;
 					const urlObject = new URL(currentURL);
-
+					urlObject.searchParams.delete("sort");
+					currentURL=urlObject.toString()
 					const separator = currentURL.includes('?') ? '&' : '?';
 
 				
 
 					if (input.value == 1) {
 
-
+						
 						const newURL = `${currentURL}${separator}sort=lowtohigh`;
 						window.location.href = newURL;
 					} else if(input.value==2) {
@@ -575,6 +576,19 @@
 				  return newURL
                 }
 				}
+			</script>
+
+			<script>
+				const categoryInputs=document.querySelectorAll('#category-filter')
+				categoryInputs.forEach((input,index)=>{
+					input.addEventListener('change',function () {
+						console.log(input.value+"input.value")
+						if(input.checked===false)return window.location.href = `?page=0`
+						return window.location.href = `?category=${input.value}&page=0`
+
+					})
+				})
+				
 			</script>
 
 
