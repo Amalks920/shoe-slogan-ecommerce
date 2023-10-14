@@ -143,23 +143,23 @@ const viewOfferProducts = async (req, res, next) => {
 };
 
 const removeOffer = async (req, res, next) => {
+  
   const productId = req.params.productId;
   const offertype = req.query.offertype;
   console.log(productId,offertype)
   try {
     if (offertype.trim() === "Product") {
-      await productModal.updateOne(
+     
+     const offerUpdate= await productModal.updateOne(
         { _id: productId },
         {
           $set: {
             offer: null,
-          },
-          $set: {
-            offerPrice: 0,
+            offerPrice: 0
           },
         }
       );
-      
+      console.log(offerUpdate)
       res.redirect("/admin/view-offers");
     }
   } catch (error) {

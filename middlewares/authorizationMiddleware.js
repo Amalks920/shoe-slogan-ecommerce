@@ -26,6 +26,7 @@ const authorizationMiddleware = async (req, res, next) => {
 };
 
 const adminAuthorizationMiddleware = async (req, res, next) => {
+  
   if (req.session.admin) {
     next();
   } else res.redirect("/admin/admin-login");
