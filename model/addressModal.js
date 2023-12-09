@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+//this is address modal
 const addressSchema = new mongoose.Schema({
     
     user:{
