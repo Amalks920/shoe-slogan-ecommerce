@@ -50,6 +50,10 @@ router.get('/order-products/:id',setCacheControl,adminAuthorizationMiddleware,ge
 router.get('/returned-products',setCacheControl,returnedProducts)
 
 
+router.get('/hi',(req,res)=>{
+    res.json({a:'a'})
+})
+
 
 router.post("/edit-order-status/:id",adminAuthorizationMiddleware,cancelOrder);
 
